@@ -3,6 +3,7 @@ package com.domain.revenue.product.suppliers.productSupplier;
 import com.domain.revenue.product.Product;
 import com.domain.revenue.supplier.Supplier;
 import com.domain.shared.BaseEntity;
+import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -61,5 +62,20 @@ public class ProductSupplier extends BaseEntity {
                        "WHERE ps.product.id = ?1",
                 product.id
         );
+    }
+
+    public static ProductSupplier findByIdTreated(Long id) {
+        return ProductSupplier.<ProductSupplier>findByIdOptional(id)
+                .orElseThrow(() -> new NotFoundException("Produte de fornece " + id + "não encontrado."));
+    }
+
+    public static ProductSupplier findByIdTreated(Long productId, Long supplierId) {
+        return ProductSupplier.<ProductSupplier>find(
+                "product.id = ?1 " +
+                        "and supplier.id = ?2",
+                productId,
+                supplierId
+        ).firstResultOptional()
+                .orElseThrow(() -> new NotFoundException("Produto " + productId + " para o fornecedor " + supplierId + " não encontrado."));
     }
 }

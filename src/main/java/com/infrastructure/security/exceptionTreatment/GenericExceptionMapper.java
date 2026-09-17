@@ -10,6 +10,8 @@ import jakarta.ws.rs.ext.Provider;
 public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
     @Override
     public Response toResponse(Throwable exception) {
+        exception.printStackTrace();
+
         ErrorResponseDto error =  new ErrorResponseDto(
                 "Ocorreu um erro interno ao processar a requisição. Tente novamente mais tarde.",
                 Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()

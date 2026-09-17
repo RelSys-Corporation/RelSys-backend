@@ -3,6 +3,7 @@ package com.domain.revenue.product;
 import com.domain.revenue.product.suppliers.productSupplier.ProductSupplier;
 import com.domain.revenue.supplier.Supplier;
 import com.domain.shared.BaseEntity;
+import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -51,7 +52,7 @@ public class Product extends BaseEntity {
             BigDecimal price,
             String barcode) {
 
-        Supplier supplier = Supplier.getSupplierById(supplierId);
+        Supplier supplier = Supplier.findByIdTreated(supplierId);
 
         Product product = new Product(name, price, barcode);
         product.persist();
@@ -75,4 +76,8 @@ public class Product extends BaseEntity {
                 .firstResultOptional();
     }
 
+    public static Product findByIdTreated(Long id) {
+        return Product.<Product>findByIdOptional(id)
+                .orElseThrow(() -> new NotFoundException("Produto " + id + " informado não existe."));
+    }
 }

@@ -17,7 +17,7 @@ public class ProductSupplierService {
             Long supplierId
     ) {
 
-        Supplier supplier = Supplier.getSupplierById(supplierId);
+        Supplier supplier = Supplier.findByIdTreated(supplierId);
 
         product.persist();
 

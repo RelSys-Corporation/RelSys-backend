@@ -5,9 +5,9 @@ import com.domain.revenue.supplier.Supplier;
 
 import java.math.BigDecimal;
 
-public record ProductBatchInputDto(
-        Product product,
-        Supplier supplier,
+public record ProductBatchReceiveInputDto(
+        Long productId,
+        Long supplierId,
         BigDecimal purchasePrice,
-        BigDecimal purchaseQuantity) {
+        BigDecimal quantity) {
 }
