@@ -28,18 +28,29 @@ public class ProductBatch extends BaseEntity {
             ProductSupplier productSupplier,
             BigDecimal purchasePrice,
             BigDecimal purchaseQuantity) {
+        if (productSupplier == null)
+            throw new IllegalArgumentException("O produto de fornecedor deve ser informado.");
+
+        if (purchasePrice.compareTo(BigDecimal.ZERO) < 0)
+            throw new IllegalArgumentException("O valor de compra deve ser igual ou mairo do que 0.");
+
+        if (purchaseQuantity.compareTo(BigDecimal.ZERO) <= 0)
+            throw new IllegalArgumentException("A quantidade de compra deve ser maior do que 0.");
+
         this.productSupplier = productSupplier;
         this.purchasePrice = purchasePrice;
         this.purchaseQuantity = purchaseQuantity;
         this.remainingQuantity = purchaseQuantity;
     }
 
-    public static void create(ProductSupplier productSupplier, BigDecimal purchasePrice, BigDecimal purchaseQuantity) {
+    public static ProductBatch create(ProductSupplier productSupplier, BigDecimal purchasePrice, BigDecimal purchaseQuantity) {
         ProductBatch productBatch = new ProductBatch(
                 productSupplier,
                 purchasePrice,
                 purchaseQuantity);
 
         productBatch.persist();
+
+        return productBatch;
     }
 }

@@ -2,7 +2,10 @@ package com.domain.revenue.product.resources;
 
 import com.domain.revenue.product.Product;
 import com.domain.revenue.product.batch.productBatch.ProductBatch;
-import com.domain.revenue.product.batch.productBatch.dtos.ProductBatchInputDto;
+import com.domain.revenue.product.batch.productBatch.dtos.ProductBatchReceiveInputDto;
+import com.domain.revenue.product.batch.productBatch.dtos.ProductBatchReceiveOutputDto;
+import com.domain.revenue.product.batch.productBatch.mappers.ProductBatchDtoMapper;
+import com.domain.revenue.product.batch.productBatch.services.ProductBatchService;
 import com.domain.revenue.product.dtos.ProductInputDto;
 import com.domain.revenue.product.dtos.ProductOutputDto;
 import com.domain.revenue.product.mappers.ProductDtoMapper;
@@ -75,15 +78,21 @@ public class ProductResource {
     @POST
     @Path("/receive")
     @Transactional
-    public void createProductBatch(ProductBatchInputDto dto) {
-        /*TODO: actually frontend dont send supplier, so resource search supplier*/
-        Supplier supplier = ProductSupplier.find(
-                "SELECT ps.supplier " +
-                        "FROM ProductSupplier ps" +
-                       "WHERE ps.product.id = ?1",
-                        dto.product())
-                .firstResult();
+    public Response createProductBatch(ProductBatchReceiveInputDto dto) {
+        ProductBatch productBatch = ProductBatchService.createProductBatch(
+                dto.productId(),
+                dto.supplierId(),
+                dto.purchasePrice(),
+                dto.quantity()
+        );
 
+        ProductBatchReceiveOutputDto productBatchDto = ProductBatchDtoMapper.toDto(productBatch);
 
+        URI uri = URI.create("productBatch/" + productBatchDto.id());
+
+        return Response
+                .created(uri)
+                .entity(productBatchDto)
+                .build();
     }
 }

@@ -3,6 +3,7 @@ package com.domain.revenue.supplier;
 import com.domain.revenue.person.Person;
 import com.domain.revenue.person.enums.personStatus.PersonStatus;
 import com.domain.shared.BaseEntity;
+import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
 @Entity
@@ -36,8 +37,8 @@ public class Supplier extends BaseEntity {
         return supplier;
     }
 
-    public static Supplier getSupplierById(Long id) {
+    public static Supplier findByIdTreated(Long id) {
         return Supplier.<Supplier>findByIdOptional(id)
-                .orElseThrow(() -> new IllegalArgumentException("Fornecedor com ID " + id + " não encontrado."));
+                .orElseThrow(() -> new NotFoundException("Fornecedor " + id + " não encontrado."));
     }
 }
