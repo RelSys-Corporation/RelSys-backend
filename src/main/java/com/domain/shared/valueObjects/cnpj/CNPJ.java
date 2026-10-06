@@ -1,13 +1,14 @@
-package com.domain.shared.valueObjects;
-
-import jakarta.validation.constraints.NotNull;
+package com.domain.shared.valueObjects.cnpj;
 
 import java.util.regex.Pattern;
 
-public record CNPJ(@NotNull String value) {
+public record CNPJ(String value) {
     private static Pattern CNPJ_PATTERN = Pattern.compile("^[A-Z0-9]{12}\\d{2}$");
 
     public CNPJ {
+        if (value == null || value.isBlank())
+            throw new IllegalArgumentException("O CNPJ deve ser informado.");
+
         value = value.toUpperCase().replaceAll("[^A-Z0-9]", "");
 
         if (value.length() != 14)

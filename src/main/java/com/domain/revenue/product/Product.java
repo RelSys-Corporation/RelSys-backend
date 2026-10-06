@@ -3,7 +3,8 @@ package com.domain.revenue.product;
 import com.domain.revenue.product.suppliers.productSupplier.ProductSupplier;
 import com.domain.revenue.supplier.Supplier;
 import com.domain.shared.BaseEntity;
-import com.domain.shared.FindableById;
+import com.domain.shared.valueObjects.barcode.Barcode;
+import com.domain.shared.valueObjects.barcode.BarcodeAttributeConverter;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
@@ -12,7 +13,7 @@ import java.util.Optional;
 
 @Entity
 @Table(name = "PRODUCT")
-public class Product extends BaseEntity implements FindableById<Product, Long> {
+public class Product extends BaseEntity {
     @Column(name = "NAME", length = 100, nullable = false, unique = true)
     public String name;
 
@@ -20,15 +21,15 @@ public class Product extends BaseEntity implements FindableById<Product, Long> {
     public BigDecimal price;
 
     @Column(name = "BARCODE", length = 50, nullable = false, unique = true)
-    /*TODO: Criar tipo*/
-    public String barcode;
+    @Convert(converter = BarcodeAttributeConverter.class)
+    public Barcode barcode;
 
     public Product() {}
 
     public Product(
             String name,
             BigDecimal price,
-            String barcode
+            Barcode barcode
     ) {
         this.name = name;
         this.price = price;
@@ -51,9 +52,9 @@ public class Product extends BaseEntity implements FindableById<Product, Long> {
             String name,
             Long supplierId,
             BigDecimal price,
-            String barcode) {
+            Barcode barcode) {
 
-        Supplier supplier = Supplier.findByIdTreated(supplierId);
+        Supplier supplier = Supplier.getByIdOrThrow(supplierId);
 
         Product product = new Product(name, price, barcode);
         product.persist();
@@ -66,10 +67,8 @@ public class Product extends BaseEntity implements FindableById<Product, Long> {
     }
 
     @PostPersist
-    public void generateBarcodeIfNull() {
-        if (this.barcode == null || this.barcode.isBlank()) {
-            this.barcode = String.format("%013d", this.id);
-        }
+    public void postPersist() {
+        this.barcode = Barcode.generateBarcode(this.id);
     }
 
     public static Optional<Product> getProductByBarcode(String barcode) {
@@ -77,9 +76,9 @@ public class Product extends BaseEntity implements FindableById<Product, Long> {
                 .firstResultOptional();
     }
 
-    @Override
-    public Product getByIdOrThrow(Long id) {
+    public static Product getByIdOrThrow(Long id) {
         return Product.<Product>findByIdOptional(id)
                 .orElseThrow(() -> new NotFoundException("Produto " + id + " informado não existe."));
     }
+
 }

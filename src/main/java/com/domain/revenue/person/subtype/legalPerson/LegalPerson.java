@@ -1,6 +1,8 @@
 package com.domain.revenue.person.subtype.legalPerson;
 
 import com.domain.revenue.person.Person;
+import com.domain.shared.valueObjects.cnpj.CNPJ;
+import com.domain.shared.valueObjects.cnpj.CnpjAttributeConverter;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,5 +12,6 @@ import jakarta.persistence.*;
 public class LegalPerson extends Person {
     /*TODO: Criar tipo*/
     @Column(name = "CNPJ", length = 14, nullable = false, unique = true)
-    public String cnpj;
+    @Convert(converter = CnpjAttributeConverter.class)
+    public CNPJ cnpj;
 }
