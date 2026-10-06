@@ -3,6 +3,7 @@ package com.domain.revenue.product.suppliers.productSupplier;
 import com.domain.revenue.product.Product;
 import com.domain.revenue.supplier.Supplier;
 import com.domain.shared.BaseEntity;
+import com.domain.shared.FindableById;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "PRODUCT_SUPPLIER")
-public class ProductSupplier extends BaseEntity {
+public class ProductSupplier extends BaseEntity implements FindableById<ProductSupplier, Long> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_ID", nullable = false)
     public Product product;
@@ -64,18 +65,19 @@ public class ProductSupplier extends BaseEntity {
         );
     }
 
-    public static ProductSupplier findByIdTreated(Long id) {
+    @Override
+    public ProductSupplier getByIdOrThrow(Long id) {
         return ProductSupplier.<ProductSupplier>findByIdOptional(id)
                 .orElseThrow(() -> new NotFoundException("Produte de fornece " + id + "não encontrado."));
     }
 
-    public static ProductSupplier findByIdTreated(Long productId, Long supplierId) {
+    public ProductSupplier getByIdOrThrow(Product product, Supplier supplier) {
         return ProductSupplier.<ProductSupplier>find(
-                "product.id = ?1 " +
-                        "and supplier.id = ?2",
-                productId,
-                supplierId
-        ).firstResultOptional()
-                .orElseThrow(() -> new NotFoundException("Produto " + productId + " para o fornecedor " + supplierId + " não encontrado."));
+                        "product = ?1 " +
+                                "and supplier = ?2",
+                        product,
+                        supplier
+                ).firstResultOptional()
+                .orElseThrow(() -> new NotFoundException("Produto " + product.id + " para o fornecedor " + supplier.id + " não encontrado."));
     }
 }

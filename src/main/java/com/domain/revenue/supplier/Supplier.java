@@ -1,14 +1,15 @@
 package com.domain.revenue.supplier;
 
 import com.domain.revenue.person.Person;
-import com.domain.revenue.person.enums.personStatus.PersonStatus;
+import com.domain.revenue.person.constant.personStatus.PersonStatus;
 import com.domain.shared.BaseEntity;
+import com.domain.shared.FindableById;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "SUPPLIER")
-public class Supplier extends BaseEntity {
+public class Supplier extends BaseEntity implements FindableById<Supplier, Long> {
     @OneToOne
     @JoinColumn(name = "PERSON_ID", nullable = false)
     public Person person;
@@ -37,7 +38,8 @@ public class Supplier extends BaseEntity {
         return supplier;
     }
 
-    public static Supplier findByIdTreated(Long id) {
+    @Override
+    public Supplier getByIdOrThrow(Long id) {
         return Supplier.<Supplier>findByIdOptional(id)
                 .orElseThrow(() -> new NotFoundException("Fornecedor " + id + " não encontrado."));
     }

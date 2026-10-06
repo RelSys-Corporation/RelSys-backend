@@ -3,6 +3,7 @@ package com.domain.revenue.product;
 import com.domain.revenue.product.suppliers.productSupplier.ProductSupplier;
 import com.domain.revenue.supplier.Supplier;
 import com.domain.shared.BaseEntity;
+import com.domain.shared.FindableById;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
@@ -11,7 +12,7 @@ import java.util.Optional;
 
 @Entity
 @Table(name = "PRODUCT")
-public class Product extends BaseEntity {
+public class Product extends BaseEntity implements FindableById<Product, Long> {
     @Column(name = "NAME", length = 100, nullable = false, unique = true)
     public String name;
 
@@ -76,7 +77,8 @@ public class Product extends BaseEntity {
                 .firstResultOptional();
     }
 
-    public static Product findByIdTreated(Long id) {
+    @Override
+    public Product getByIdOrThrow(Long id) {
         return Product.<Product>findByIdOptional(id)
                 .orElseThrow(() -> new NotFoundException("Produto " + id + " informado não existe."));
     }
