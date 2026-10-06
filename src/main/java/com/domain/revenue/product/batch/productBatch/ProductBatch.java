@@ -22,21 +22,12 @@ public class ProductBatch extends BaseEntity {
     @Column(name = "REMAINING_QUANTITY", scale = 15, precision = 3, nullable = false)
     public BigDecimal remainingQuantity;
 
-    public ProductBatch() {}
+    protected ProductBatch() {}
 
-    public ProductBatch(
+    private ProductBatch(
             ProductSupplier productSupplier,
             BigDecimal purchasePrice,
             BigDecimal purchaseQuantity) {
-        if (productSupplier == null)
-            throw new IllegalArgumentException("O produto de fornecedor deve ser informado.");
-
-        if (purchasePrice.compareTo(BigDecimal.ZERO) < 0)
-            throw new IllegalArgumentException("O valor de compra deve ser igual ou mairo do que 0.");
-
-        if (purchaseQuantity.compareTo(BigDecimal.ZERO) <= 0)
-            throw new IllegalArgumentException("A quantidade de compra deve ser maior do que 0.");
-
         this.productSupplier = productSupplier;
         this.purchasePrice = purchasePrice;
         this.purchaseQuantity = purchaseQuantity;

@@ -17,9 +17,9 @@ public class Supplier extends BaseEntity {
     @JoinColumn(name = "PERSON_STATUS_ID", nullable = false)
     public PersonStatus personStatus;
 
-    public Supplier() {}
+    protected Supplier() {}
 
-    public Supplier(Person person, PersonStatus personStatus) {
+    private Supplier(Person person, PersonStatus personStatus) {
         this.person = person;
         this.personStatus = personStatus;
     }

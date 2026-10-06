@@ -22,9 +22,9 @@ public class ProductSupplier extends BaseEntity {
     @Column(name = "DISCOUNT_ALLOWED", nullable = false)
     public Boolean discountAllowed;
 
-    public ProductSupplier() {}
+    protected ProductSupplier() {}
 
-    public ProductSupplier(Product product, Supplier supplier, Boolean discountAllowed) {
+    private ProductSupplier(Product product, Supplier supplier, Boolean discountAllowed) {
         this.product = product;
         this.supplier = supplier;
         this.discountAllowed = discountAllowed;

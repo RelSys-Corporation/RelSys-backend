@@ -10,7 +10,9 @@ import jakarta.persistence.*;
 @PrimaryKeyJoinColumn(name = "PERSON_ID", referencedColumnName = "ID")
 @DiscriminatorValue("F")
 public class PhysicalPerson extends Person {
-    @Column(name = "CPF", length = 11, nullable = false, unique = true)
     @Convert(converter = CpfAttributeConverter.class)
+    @Column(name = "CPF", length = 11, nullable = false, unique = true)
     public CPF cpf;
+
+    protected PhysicalPerson() {}
 }

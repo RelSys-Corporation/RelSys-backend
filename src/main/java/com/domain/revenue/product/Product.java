@@ -24,17 +24,7 @@ public class Product extends BaseEntity {
     @Convert(converter = BarcodeAttributeConverter.class)
     public Barcode barcode;
 
-    public Product() {}
-
-    public Product(
-            String name,
-            BigDecimal price,
-            Barcode barcode
-    ) {
-        this.name = name;
-        this.price = price;
-        this.barcode = barcode;
-    }
+    protected Product() {}
 
     @Override
     public boolean equals(Object o) {

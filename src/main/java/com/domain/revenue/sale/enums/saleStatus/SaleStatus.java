@@ -17,4 +17,6 @@ public class SaleStatus extends PanacheEntityBase {
 
     @Column(name = "CREATED_AT", nullable = false)
     public LocalDateTime createdAt;
+
+    protected SaleStatus() {}
 }

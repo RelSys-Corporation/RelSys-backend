@@ -25,4 +25,6 @@ public class Sale extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SALE_STATUS_ID", nullable = false)
     public SaleStatus saleStatus;
+
+    protected Sale() {}
 }

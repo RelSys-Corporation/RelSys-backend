@@ -28,4 +28,6 @@ public class ProductSaleBatch extends BaseEntity {
 
     @Column(name = "PURCHASE_PRICE", scale = 15, precision = 3, nullable = false)
     public BigDecimal purchasePrice;
+
+    protected ProductSaleBatch() {}
 }

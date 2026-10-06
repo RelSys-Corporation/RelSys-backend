@@ -14,4 +14,6 @@ public class PaymentMethod extends BaseEntity {
 
     @Column(name = "ACRONYM", length = 2, nullable = false, unique = true)
     public String acronym;
+
+    protected PaymentMethod() {};
 }

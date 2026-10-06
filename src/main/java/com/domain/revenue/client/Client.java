@@ -15,4 +15,6 @@ public class Client extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "PERSON_STATUS_ID", nullable = false)
     public PersonStatus personStatus;
+
+    protected Client() {}
 }

@@ -31,4 +31,6 @@ public class ProductSale extends BaseEntity {
 
     @Column(name = "PRODUCT_PRICE", scale = 15, precision = 3, nullable = false)
     public BigDecimal productPrice;
+
+    protected ProductSale() {}
 }

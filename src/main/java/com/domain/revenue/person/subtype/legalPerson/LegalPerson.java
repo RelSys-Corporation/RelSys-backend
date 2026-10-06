@@ -10,8 +10,9 @@ import jakarta.persistence.*;
 @PrimaryKeyJoinColumn(name = "PERSON_ID", referencedColumnName = "ID")
 @DiscriminatorValue("J")
 public class LegalPerson extends Person {
-    /*TODO: Criar tipo*/
-    @Column(name = "CNPJ", length = 14, nullable = false, unique = true)
     @Convert(converter = CnpjAttributeConverter.class)
+    @Column(name = "CNPJ", length = 14, nullable = false, unique = true)
     public CNPJ cnpj;
+
+    protected LegalPerson() {}
 }

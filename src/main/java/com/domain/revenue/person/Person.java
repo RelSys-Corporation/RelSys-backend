@@ -22,13 +22,13 @@ public class Person extends BaseEntity {
     @Column(name = "PERSON_TYPE_ACRONYM", length = 2, insertable = false, updatable = false)
     public String personTypeAcronym;
 
-    public Person() {}
+    protected Person() {}
 
-    public Person(String name) {
+    private Person(String name) {
         this.name = name;
     }
 
-    public Person(
+    private Person(
             String name,
             String email,
             String personTypeAcronym) {
