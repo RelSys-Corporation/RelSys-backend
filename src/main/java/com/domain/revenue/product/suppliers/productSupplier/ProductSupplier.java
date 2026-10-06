@@ -66,7 +66,7 @@ public class ProductSupplier extends BaseEntity {
 
 
 
-    public ProductSupplier getByIdOrThrow(Product product, Supplier supplier) {
+    public static ProductSupplier getByIdOrThrow(Product product, Supplier supplier) {
         return ProductSupplier.<ProductSupplier>find(
                         "product = ?1 " +
                                 "and supplier = ?2",
