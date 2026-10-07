@@ -26,46 +26,32 @@ import java.util.List;
 public class ProductResource {
     @GET
     public Response getAllProducts() {
-        List<ProductOutputDto> productOutputDtos = ProductSupplierService.getAllProductAndSuppliers()
-                .entrySet()
-                .stream()
-                .map(entry -> ProductDtoMapper.toDto(entry.getKey(), entry.getValue()))
+        List<ProductOutputDto> productOutputDtos = Product.<Product>listAll().stream()
+                .map(ProductDtoMapper::toDto)
                 .toList();
 
-        return Response.ok().entity(productOutputDtos).build();
+        return Response.ok(productOutputDtos).build();
     }
 
     @GET
     @Path("/barcode")
     public Response getProductByBarcode(@QueryParam("barcode") String barcode) {
-        return Product.getProductByBarcode(barcode)
-                .map(product -> {
-                    List<Supplier> suppliers = ProductSupplier.getSuppliersOfProduct(product);
-                    return Response.ok().entity(
-                            ProductDtoMapper.toDto(
-                                    product,
-                                    suppliers
-                            )
-                    ).build();
-                })
-                .orElseGet(() -> Response.status(Response.Status.NOT_FOUND).build());
+        return Response.ok(ProductDtoMapper.toDto(
+                Product.getProductByBarcode(barcode)
+        )).build();
     }
 
     @POST
     @Transactional
     public Response createProduct(ProductInputDto dto) {
-
-        Product product = Product.create(
+        Product product = ProductSupplierService.createProduct(
                 dto.name(),
-                dto.supplierId(),
                 dto.price(),
-                dto.barcode()
+                dto.barcode(),
+                dto.supplierId()
         );
 
-        ProductOutputDto productDto = ProductDtoMapper.toDto(
-                product,
-                ProductSupplier.getSuppliersOfProduct(product)
-        );
+        ProductOutputDto productDto = ProductDtoMapper.toDto(product);
 
         URI uri = URI.create("/product/" + productDto.id());
 
@@ -88,7 +74,7 @@ public class ProductResource {
 
         ProductBatchReceiveOutputDto productBatchDto = ProductBatchDtoMapper.toDto(productBatch);
 
-        URI uri = URI.create("productBatch/" + productBatchDto.id());
+        URI uri = URI.create("/productBatch/" + productBatchDto.id());
 
         return Response
                 .created(uri)

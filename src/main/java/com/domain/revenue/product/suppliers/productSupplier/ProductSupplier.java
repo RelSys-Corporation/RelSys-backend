@@ -24,7 +24,11 @@ public class ProductSupplier extends BaseEntity {
 
     protected ProductSupplier() {}
 
-    private ProductSupplier(Product product, Supplier supplier, Boolean discountAllowed) {
+    private ProductSupplier(
+            Product product,
+            Supplier supplier,
+            Boolean discountAllowed
+    ) {
         this.product = product;
         this.supplier = supplier;
         this.discountAllowed = discountAllowed;
@@ -53,27 +57,6 @@ public class ProductSupplier extends BaseEntity {
                         "JOIN FETCH ps.supplier s " +
                         "JOIN FETCH s.person"
         );
-    }
-
-    public static List<Supplier> getSuppliersOfProduct(Product product) {
-        return ProductSupplier.list(
-                "SELECT ps.supplier " +
-                        "FROM ProductSupplier ps " +
-                       "WHERE ps.product.id = ?1",
-                product.id
-        );
-    }
-
-
-
-    public static ProductSupplier getByIdOrThrow(Product product, Supplier supplier) {
-        return ProductSupplier.<ProductSupplier>find(
-                        "product = ?1 " +
-                                "and supplier = ?2",
-                        product,
-                        supplier
-                ).firstResultOptional()
-                .orElseThrow(() -> new NotFoundException("Produto " + product.id + " para o fornecedor " + supplier.id + " não encontrado."));
     }
 
     public static ProductSupplier getByIdOrThrow(Long id) {

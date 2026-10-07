@@ -11,7 +11,7 @@ import jakarta.persistence.*;
         discriminatorType = DiscriminatorType.STRING,
         length = 2
 )
-@DiscriminatorValue("null")
+@DiscriminatorValue("D")
 public class Person extends BaseEntity {
     @Column(name = "NAME", length = 200, nullable = false, unique = true)
     public String name;

@@ -5,6 +5,7 @@ import com.domain.revenue.supplier.Supplier;
 import com.domain.shared.BaseEntity;
 import com.domain.shared.valueObjects.barcode.Barcode;
 import com.domain.shared.valueObjects.barcode.BarcodeAttributeConverter;
+import com.infrastructure.exceptions.DomainException;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
@@ -24,46 +25,53 @@ public class Product extends BaseEntity {
     @Convert(converter = BarcodeAttributeConverter.class)
     public Barcode barcode;
 
-    protected Product() {}
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Product product)) return false;
-        return id != null && id.equals(product.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
-
-    public static Product create(
-            String name,
-            Long supplierId,
-            BigDecimal price,
-            Barcode barcode) {
-
-        Supplier supplier = Supplier.getByIdOrThrow(supplierId);
-
-        Product product = new Product(name, price, barcode);
-        product.persist();
-
-        ProductSupplier.create(product, supplier, Boolean.FALSE);
-
-        Product.flush();
-
-        return product;
-    }
-
     @PostPersist
     public void postPersist() {
         this.barcode = Barcode.generateBarcode(this.id);
     }
 
-    public static Optional<Product> getProductByBarcode(String barcode) {
+    protected Product() {}
+
+    private Product(
+            String name,
+            BigDecimal price,
+            Barcode barcode
+    ) {
+        if (name == null || name.isBlank())
+            throw new DomainException("O nome do produto não pode ser nulo.");
+
+        if (price.compareTo(BigDecimal.ZERO) < 0)
+            throw new DomainException("O preço do produto deve ser maior ou igual a 0.");
+
+        this.name = name;
+        this.price = price;
+        this.barcode = barcode;
+    }
+
+    public static Product create(
+            String name,
+            BigDecimal price,
+            Barcode barcode
+    ) {
+        Product product = new Product(
+                name,
+                price,
+                barcode
+        );
+
+        product.persist();
+
+        return product;
+    }
+
+    public static Product getProductByBarcode(String barcode) {
         return Product.<Product>find("barcode", barcode)
-                .firstResultOptional();
+                .firstResultOptional()
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("Nenhum produto encontrado com o código de barras: %s",
+                                barcode
+                        )
+                ));
     }
 
     public static Product getByIdOrThrow(Long id) {

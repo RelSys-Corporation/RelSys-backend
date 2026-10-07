@@ -10,8 +10,4 @@ public class SupplierDtoMapper {
     public static SupplierOutputDto toDto(Supplier entity) {
         return new SupplierOutputDto(entity.id, entity.person.name);
     }
-
-    public static Supplier toEntity(SupplierInputDto dto, Person person) {
-        return new Supplier(person, PersonStatus.getActive());
-    }
 }

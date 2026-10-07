@@ -25,8 +25,7 @@ public class Supplier extends BaseEntity {
     }
 
     public static Supplier create(String name) {
-        Person person = new Person(name);
-        person.persist();
+
 
         Supplier supplier = new Supplier(
                 person,

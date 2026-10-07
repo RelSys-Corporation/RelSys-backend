@@ -34,11 +34,15 @@ public class ProductBatch extends BaseEntity {
         this.remainingQuantity = purchaseQuantity;
     }
 
-    public static ProductBatch create(ProductSupplier productSupplier, BigDecimal purchasePrice, BigDecimal purchaseQuantity) {
+    public static ProductBatch create(
+            ProductSupplier productSupplier,
+            BigDecimal purchasePrice,
+            BigDecimal purchaseQuantity) {
         ProductBatch productBatch = new ProductBatch(
                 productSupplier,
                 purchasePrice,
-                purchaseQuantity);
+                purchaseQuantity
+        );
 
         productBatch.persist();
 

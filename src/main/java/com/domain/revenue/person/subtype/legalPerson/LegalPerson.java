@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "LEGAL_PERSON")
 @PrimaryKeyJoinColumn(name = "PERSON_ID", referencedColumnName = "ID")
-@DiscriminatorValue("J")
+@DiscriminatorValue("L")
 public class LegalPerson extends Person {
     @Convert(converter = CnpjAttributeConverter.class)
     @Column(name = "CNPJ", length = 14, nullable = false, unique = true)
