@@ -19,4 +19,6 @@ public class Users extends BaseEntity {
 
     @Column(name = "ACTIVE", nullable = false)
     public Boolean active;
+
+    protected Users() {}
 }

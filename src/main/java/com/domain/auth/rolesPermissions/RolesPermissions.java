@@ -18,4 +18,6 @@ public class RolesPermissions extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "PERMISSION_ID", nullable = false)
     public Permissions permission;
+
+    protected RolesPermissions() {}
 }

@@ -11,4 +11,6 @@ import java.time.LocalDateTime;
 public class Permissions extends BaseEntity {
     @Column(name = "NAME", length = 100, nullable = false, unique = true)
     public String name;
+
+    protected Permissions() {}
 }
