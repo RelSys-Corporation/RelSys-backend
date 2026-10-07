@@ -16,6 +16,9 @@ public class Person extends BaseEntity {
     @Column(name = "NAME", length = 200, nullable = false, unique = true)
     public String name;
 
+    @JoinColumn(name = "COMPANY_ID")
+
+
     @Column(name = "EMAIL", length = 255, unique = true)
     public String email;
 
