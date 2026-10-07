@@ -17,12 +17,13 @@ public class PersonResource {
          * precisa trazer se é F, J ou D (digital, sem cpf/cnpj e outros dados)
          * preicsa trazer as roles ['CLIENT', 'SUPPLIER']
          */
+        return null;
     }
 
     @PUT
     @Transactional
     @Path("/{id}/roles")
     public Response updateRoles(@PathParam("id") Long id) {
-
+        return null;
     }
 }

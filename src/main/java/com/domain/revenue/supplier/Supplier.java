@@ -24,9 +24,7 @@ public class Supplier extends BaseEntity {
         this.personStatus = personStatus;
     }
 
-    public static Supplier create(String name) {
-
-
+    public static Supplier create(Person person) {
         Supplier supplier = new Supplier(
                 person,
                 PersonStatus.of(PersonStatus.Type.ACTIVE)

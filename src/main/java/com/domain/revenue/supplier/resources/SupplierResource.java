@@ -18,26 +18,9 @@ import java.net.URI;
 public class SupplierResource {
     @GET
     public Response getAllSuppliers() {
-        return Response.ok()
-                .entity(
-                        Supplier.<Supplier>listAll().stream()
-                                .map(SupplierDtoMapper::toDto)
-                                .toList()
-                ).build();
-    }
-
-    @POST
-    @Transactional
-    public Response createSupplier(SupplierInputDto dto) {
-        SupplierOutputDto supplierDto = SupplierDtoMapper.toDto(
-                Supplier.create(dto.name())
-        );
-
-        URI uri = URI.create("/supplier/" + supplierDto.id());
-
-        return Response.
-                created(uri)
-                .entity(supplierDto)
-                .build();
+        return Response.ok(Supplier.<Supplier>listAll().stream()
+                        .map(SupplierDtoMapper::toDto)
+                        .toList()
+        ).build();
     }
 }
