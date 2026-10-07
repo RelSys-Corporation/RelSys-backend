@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "PERMISSIONS")
+@Table(name = "PERMISSIONS", schema = "")
 public class Permissions extends BaseEntity {
     @Column(name = "NAME", length = 100, nullable = false, unique = true)
     public String name;
