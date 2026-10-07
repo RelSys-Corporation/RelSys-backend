@@ -1,8 +1,6 @@
 package com.domain.revenue.product;
 
-import com.domain.revenue.product.suppliers.productSupplier.ProductSupplier;
-import com.domain.revenue.supplier.Supplier;
-import com.domain.shared.BaseEntity;
+import com.domain.shared.BaseEntityCompany;
 import com.domain.shared.valueObjects.barcode.Barcode;
 import com.domain.shared.valueObjects.barcode.BarcodeAttributeConverter;
 import com.infrastructure.exceptions.DomainException;
@@ -10,11 +8,10 @@ import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 @Entity
 @Table(name = "PRODUCT")
-public class Product extends BaseEntity {
+public class Product extends BaseEntityCompany {
     @Column(name = "NAME", length = 100, nullable = false, unique = true)
     public String name;
 

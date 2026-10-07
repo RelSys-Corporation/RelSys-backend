@@ -3,6 +3,7 @@ package com.domain.revenue.product.suppliers.productSupplier;
 import com.domain.revenue.product.Product;
 import com.domain.revenue.supplier.Supplier;
 import com.domain.shared.BaseEntity;
+import com.domain.shared.BaseEntityCompany;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "PRODUCT_SUPPLIER")
-public class ProductSupplier extends BaseEntity {
+public class ProductSupplier extends BaseEntityCompany {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_ID", nullable = false)
     public Product product;

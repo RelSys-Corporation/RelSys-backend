@@ -3,12 +3,13 @@ package com.domain.revenue.supplier;
 import com.domain.revenue.person.Person;
 import com.domain.revenue.person.constant.personStatus.PersonStatus;
 import com.domain.shared.BaseEntity;
+import com.domain.shared.BaseEntityCompany;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "SUPPLIER")
-public class Supplier extends BaseEntity {
+public class Supplier extends BaseEntityCompany {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)
     public Person person;

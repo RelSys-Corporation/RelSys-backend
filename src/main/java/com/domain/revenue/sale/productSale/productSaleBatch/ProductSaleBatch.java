@@ -3,6 +3,7 @@ package com.domain.revenue.sale.productSale.productSaleBatch;
 import com.domain.revenue.product.batch.productBatch.ProductBatch;
 import com.domain.revenue.sale.productSale.ProductSale;
 import com.domain.shared.BaseEntity;
+import com.domain.shared.BaseEntityCompany;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "PRODUCT_SALE_BATCH")
-public class ProductSaleBatch extends BaseEntity {
+public class ProductSaleBatch extends BaseEntityCompany {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_SALE_ID", nullable = false)
     public ProductSale productSale;

@@ -2,12 +2,12 @@ package com.domain.revenue.client;
 
 import com.domain.revenue.person.Person;
 import com.domain.revenue.person.constant.personStatus.PersonStatus;
-import com.domain.shared.BaseEntity;
+import com.domain.shared.BaseEntityCompany;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "CLIENT")
-public class Client extends BaseEntity {
+public class Client extends BaseEntityCompany {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)
     public Person person;
