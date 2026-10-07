@@ -9,11 +9,11 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "SUPPLIER")
 public class Supplier extends BaseEntity {
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)
     public Person person;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_STATUS_ID", nullable = false)
     public PersonStatus personStatus;
 

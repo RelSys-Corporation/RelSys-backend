@@ -13,7 +13,7 @@ public class Users extends BaseEntity {
     @Column(name = "NAME", length = 100, nullable = false, unique = true)
     public String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ROLE_ID", nullable = false)
     public Roles role;
 

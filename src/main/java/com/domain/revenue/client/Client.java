@@ -8,11 +8,11 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "CLIENT")
 public class Client extends BaseEntity {
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)
     public Person person;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_STATUS_ID", nullable = false)
     public PersonStatus personStatus;
 
