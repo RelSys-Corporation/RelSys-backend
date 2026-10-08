@@ -4,7 +4,7 @@ import com.domain.shared.BaseEntityCompany;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "PAYMENT_METHOD")
+@Table(name = "PAYMENT_METHOD", schema = "FINANCIAL")
 public class PaymentMethod extends BaseEntityCompany {
     @Column(name = "NAME", length = 50, nullable = false, unique = true)
     public String name;

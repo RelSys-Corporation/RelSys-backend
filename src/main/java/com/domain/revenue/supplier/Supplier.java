@@ -8,7 +8,7 @@ import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "SUPPLIER")
+@Table(name = "SUPPLIER", schema = "REVENUE")
 public class Supplier extends BaseEntityCompany {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)

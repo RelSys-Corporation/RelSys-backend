@@ -6,7 +6,7 @@ import com.domain.shared.valueObjects.cpf.CpfAttributeConverter;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "PHYSICAL_PERSON")
+@Table(name = "PHYSICAL_PERSON", schema = "REVENUE")
 @PrimaryKeyJoinColumn(name = "PERSON_ID", referencedColumnName = "ID")
 @DiscriminatorValue("P")
 public class PhysicalPerson extends Person {

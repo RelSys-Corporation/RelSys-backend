@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "PRODUCT_BATCH")
+@Table(name = "PRODUCT_BATCH", schema = "REVENUE")
 public class ProductBatch extends BaseEntityCompany {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_SUPPLIER_ID", nullable = false)

@@ -6,7 +6,7 @@ import com.domain.shared.valueObjects.cnpj.CnpjAttributeConverter;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "LEGAL_PERSON")
+@Table(name = "LEGAL_PERSON", schema = "REVENUE")
 @PrimaryKeyJoinColumn(name = "PERSON_ID", referencedColumnName = "ID")
 @DiscriminatorValue("L")
 public class LegalPerson extends Person {

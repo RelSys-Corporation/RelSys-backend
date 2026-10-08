@@ -4,7 +4,7 @@ import com.domain.shared.BaseEntity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "PERSON_STATUS")
+@Table(name = "PERSON_STATUS", schema = "REVENUE")
 public class PersonStatus extends BaseEntity {
     @Column(name = "NAME", nullable = false, unique = true)
     public String name;

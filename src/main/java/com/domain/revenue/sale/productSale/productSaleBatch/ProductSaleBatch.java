@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "PRODUCT_SALE_BATCH")
+@Table(name = "PRODUCT_SALE_BATCH", schema = "REVENUE")
 public class ProductSaleBatch extends BaseEntityCompany {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_SALE_ID", nullable = false)

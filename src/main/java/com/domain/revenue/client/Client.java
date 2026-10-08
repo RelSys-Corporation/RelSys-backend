@@ -6,7 +6,7 @@ import com.domain.shared.BaseEntityCompany;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "CLIENT")
+@Table(name = "CLIENT", schema = "REVENUE")
 public class Client extends BaseEntityCompany {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)

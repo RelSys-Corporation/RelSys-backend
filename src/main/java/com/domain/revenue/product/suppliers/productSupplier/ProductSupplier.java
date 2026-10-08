@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "PRODUCT_SUPPLIER")
+@Table(name = "PRODUCT_SUPPLIER", schema = "REVENUE")
 public class ProductSupplier extends BaseEntityCompany {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_ID", nullable = false)

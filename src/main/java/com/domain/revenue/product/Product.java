@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "PRODUCT")
+@Table(name = "PRODUCT", schema = "REVENUE")
 public class Product extends BaseEntityCompany {
     @Column(name = "NAME", length = 100, nullable = false, unique = true)
     public String name;
