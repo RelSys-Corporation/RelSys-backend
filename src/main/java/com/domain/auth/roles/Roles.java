@@ -1,20 +1,16 @@
 package com.domain.auth.roles;
 
+import com.domain.shared.BaseEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "ROLES")
-public class Roles extends PanacheEntityBase {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
-
+@Table(name = "ROLES", schema = "AUTH")
+public class Roles extends BaseEntity {
     @Column(name = "NAME", length = 100, nullable = false, unique = true)
     public String name;
 
-    @Column(name = "CREATED_AT", nullable = false)
-    public LocalDateTime createdAt;
+    protected Roles() {}
 }

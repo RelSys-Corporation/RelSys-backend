@@ -1,27 +1,20 @@
 package com.domain.revenue.client;
 
 import com.domain.revenue.person.Person;
-import com.domain.revenue.person.enums.personStatus.PersonStatus;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import com.domain.revenue.person.constant.personStatus.PersonStatus;
+import com.domain.shared.BaseEntityCompany;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
-
 @Entity
-@Table(name = "CLIENT")
-public class Client extends PanacheEntityBase {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
-
-    @OneToOne
+@Table(name = "CLIENT", schema = "REVENUE")
+public class Client extends BaseEntityCompany {
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)
     public Person person;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_STATUS_ID", nullable = false)
     public PersonStatus personStatus;
 
-    @Column(name = "CREATED_AT", nullable = false)
-    public LocalDateTime createdAt;
+    protected Client() {}
 }

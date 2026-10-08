@@ -2,6 +2,8 @@ package com.domain.revenue.sale.productSale;
 
 import com.domain.revenue.product.Product;
 import com.domain.revenue.sale.Sale;
+import com.domain.shared.BaseEntity;
+import com.domain.shared.BaseEntityCompany;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
@@ -9,12 +11,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "PRODUCT_SALE")
-public class ProductSale extends PanacheEntityBase {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
-
+@Table(name = "PRODUCT_SALE", schema = "REVENUE")
+public class ProductSale extends BaseEntityCompany {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SALE_ID", nullable = false)
     public Sale sale;
@@ -35,6 +33,5 @@ public class ProductSale extends PanacheEntityBase {
     @Column(name = "PRODUCT_PRICE", scale = 15, precision = 3, nullable = false)
     public BigDecimal productPrice;
 
-    @Column(name = "CREATED_AT", nullable = false)
-    public LocalDateTime createdAt;
+    protected ProductSale() {}
 }

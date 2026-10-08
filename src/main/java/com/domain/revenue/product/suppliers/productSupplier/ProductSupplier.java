@@ -3,14 +3,15 @@ package com.domain.revenue.product.suppliers.productSupplier;
 import com.domain.revenue.product.Product;
 import com.domain.revenue.supplier.Supplier;
 import com.domain.shared.BaseEntity;
+import com.domain.shared.BaseEntityCompany;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-@Table(name = "PRODUCT_SUPPLIER")
-public class ProductSupplier extends BaseEntity {
+@Table(name = "PRODUCT_SUPPLIER", schema = "REVENUE")
+public class ProductSupplier extends BaseEntityCompany {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_ID", nullable = false)
     public Product product;
@@ -22,9 +23,13 @@ public class ProductSupplier extends BaseEntity {
     @Column(name = "DISCOUNT_ALLOWED", nullable = false)
     public Boolean discountAllowed;
 
-    public ProductSupplier() {}
+    protected ProductSupplier() {}
 
-    public ProductSupplier(Product product, Supplier supplier, Boolean discountAllowed) {
+    private ProductSupplier(
+            Product product,
+            Supplier supplier,
+            Boolean discountAllowed
+    ) {
         this.product = product;
         this.supplier = supplier;
         this.discountAllowed = discountAllowed;
@@ -55,27 +60,8 @@ public class ProductSupplier extends BaseEntity {
         );
     }
 
-    public static List<Supplier> getSuppliersOfProduct(Product product) {
-        return ProductSupplier.list(
-                "SELECT ps.supplier " +
-                        "FROM ProductSupplier ps " +
-                       "WHERE ps.product.id = ?1",
-                product.id
-        );
-    }
-
-    public static ProductSupplier findByIdTreated(Long id) {
+    public static ProductSupplier getByIdOrThrow(Long id) {
         return ProductSupplier.<ProductSupplier>findByIdOptional(id)
                 .orElseThrow(() -> new NotFoundException("Produte de fornece " + id + "não encontrado."));
-    }
-
-    public static ProductSupplier findByIdTreated(Long productId, Long supplierId) {
-        return ProductSupplier.<ProductSupplier>find(
-                "product.id = ?1 " +
-                        "and supplier.id = ?2",
-                productId,
-                supplierId
-        ).firstResultOptional()
-                .orElseThrow(() -> new NotFoundException("Produto " + productId + " para o fornecedor " + supplierId + " não encontrado."));
     }
 }

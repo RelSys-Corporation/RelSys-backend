@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "SALE_STATUS")
+@Table(name = "SALE_STATUS", schema = "REVENUE")
 public class SaleStatus extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,4 +17,6 @@ public class SaleStatus extends PanacheEntityBase {
 
     @Column(name = "CREATED_AT", nullable = false)
     public LocalDateTime createdAt;
+
+    protected SaleStatus() {}
 }

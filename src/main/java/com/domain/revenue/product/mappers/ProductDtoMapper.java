@@ -9,23 +9,12 @@ import com.domain.revenue.supplier.mappers.SupplierDtoMapper;
 import java.util.List;
 
 public class ProductDtoMapper {
-    /*public static Product toEntity(ProductInputDto dto) {
-        return new Product(
-                dto.name(),
-                dto.supplierId(),
-                dto.price(),
-                dto.barcode()
-        );
-    }
-*/
-    public static ProductOutputDto toDto (Product entity, List<Supplier> suppliers) {
+    public static ProductOutputDto toDto (Product entity) {
         return new ProductOutputDto(
                 entity.id,
-                suppliers.stream()
-                        .map(SupplierDtoMapper::toDto)
-                        .toList(),
                 entity.name,
                 entity.price,
-                entity.barcode);
+                entity.barcode.value()
+        );
     }
 }

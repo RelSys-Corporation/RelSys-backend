@@ -3,6 +3,7 @@ package com.domain.revenue.product.batch.productBatch.services;
 import com.domain.revenue.product.Product;
 import com.domain.revenue.product.batch.productBatch.ProductBatch;
 import com.domain.revenue.product.suppliers.productSupplier.ProductSupplier;
+import com.domain.revenue.product.suppliers.productSupplier.services.ProductSupplierService;
 import com.domain.revenue.supplier.Supplier;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -19,7 +20,10 @@ public class ProductBatchService {
             BigDecimal purchasePrice,
             BigDecimal purchaseQuantity
     ) {
-        ProductSupplier productSupplier = ProductSupplier.findByIdTreated(productId, supplierId);
+        Product product = Product.getByIdOrThrow(productId);
+        Supplier supplier = Supplier.getByIdOrThrow(supplierId);
+
+        ProductSupplier productSupplier = ProductSupplierService.getByIdOrThrow(product, supplier);
 
         return ProductBatch.create(
                 productSupplier,

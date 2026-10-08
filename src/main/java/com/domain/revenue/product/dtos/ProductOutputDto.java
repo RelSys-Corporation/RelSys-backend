@@ -9,7 +9,6 @@ import java.util.List;
 @RegisterForReflection
 public record ProductOutputDto(
         Long id,
-        List<SupplierOutputDto> suppliers,
         String name,
         BigDecimal price,
         String barcode
