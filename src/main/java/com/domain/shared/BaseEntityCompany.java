@@ -1,6 +1,6 @@
 package com.domain.shared;
 
-import com.domain.system.Company;
+import com.domain.system.company.Company;
 import jakarta.persistence.*;
 import org.hibernate.annotations.TenantId;
 

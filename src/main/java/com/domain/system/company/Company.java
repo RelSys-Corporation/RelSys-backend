@@ -1,6 +1,7 @@
-package com.domain.system;
+package com.domain.system.company;
 
 import com.domain.shared.BaseEntity;
+import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
 @Entity
@@ -20,4 +21,9 @@ public class Company extends BaseEntity {
     Company HeadquarterCompany;
 
     protected Company() {}
+
+    public static Company getByIdOrThrow(Long id) {
+        return Company.<Company>findByIdOptional(id)
+                .orElseThrow(() -> new NotFoundException("Empresa (" + id + ") não encontrada."));
+    }
 }

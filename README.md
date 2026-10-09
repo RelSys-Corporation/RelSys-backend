@@ -1,5 +1,11 @@
 # relotronica
 
+Configure envirnoment:
+* **JWT_ISSUER**
+* **DATASOURCE_JDBC_URL**
+* **DATASOURCE_USERNAME**
+* **DATASOURCE_PASSWORD**
+
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
