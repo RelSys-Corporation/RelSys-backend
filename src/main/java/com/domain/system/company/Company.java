@@ -22,7 +22,17 @@ public class Company extends BaseEntity {
 
     protected Company() {}
 
+    public static Company getById(Long id) {
+        if (id == null)
+            return null;
+
+        return Company.findById(id);
+    }
+
     public static Company getByIdOrThrow(Long id) {
+        if (id == null)
+            return null;
+
         return Company.<Company>findByIdOptional(id)
                 .orElseThrow(() -> new NotFoundException("Empresa (" + id + ") não encontrada."));
     }

@@ -9,6 +9,8 @@ import com.domain.auth.authManager.services.TokenService;
 import com.domain.auth.users.Users;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -21,9 +23,10 @@ import java.net.URI;
 public class AuthResource {
     @POST
     @Path("/register")
+    @Transactional
     @RolesAllowed("CREATE-USER")
     public Response register(RegisterInputDto dto) {
-        Users user = AuthService.register(dto.name(), dto.password());
+        Users user = AuthService.register(dto.userName(), dto.userPassword(), dto.roleId());
 
         URI uri = URI.create("/user/" + user.id);
 
@@ -32,6 +35,7 @@ public class AuthResource {
 
     @POST
     @Path("/login")
+    @Transactional
     @PermitAll
     public Response login(LoginInputDto dto) {
         String token = AuthService.processLogin(

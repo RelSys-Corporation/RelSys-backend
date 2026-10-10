@@ -22,7 +22,7 @@ public class TokenService {
 
         return Jwt.issuer(System.getenv("JWT_ISSUER"))
                 .upn(user.name)
-                .claim("companyId", company.id)
+                .claim("companyId", (company == null ? 0 : company.id))
                 .groups(authorities)
                 .expiresIn(Duration.ofHours(8))
                 .sign();

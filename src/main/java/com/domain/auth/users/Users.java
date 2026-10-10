@@ -3,11 +3,7 @@ package com.domain.auth.users;
 import com.domain.auth.roles.Roles;
 import com.domain.shared.BaseEntity;
 import com.infrastructure.exceptions.NotFoundException;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
-import jakarta.ws.rs.Consumes;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "USERS", schema = "AUTH")
@@ -29,19 +25,23 @@ public class Users extends BaseEntity {
 
     private Users(
             String name,
-            String password) {
+            String password,
+            Roles role) {
         this.name = name;
         this.password = password;
+        this.role = role;
         this.active = Boolean.TRUE;
     }
 
     public static Users create(
             String name,
-            String password
+            String password,
+            Roles role
     ) {
         Users user = new Users(
                 name,
-                password
+                password,
+                role
         );
         user.persist();
 
@@ -51,6 +51,13 @@ public class Users extends BaseEntity {
     public static Users getByIdOrThrow(Long id) {
         return Users.<Users>findByIdOptional(id)
                 .orElseThrow(() -> new NotFoundException("Usuário (" + id + ") não encontrado."));
+    }
+
+    public static Users getByName(String name) {
+        return Users.<Users>find(
+                "name = ?1",
+                name)
+                .firstResult();
     }
 
     public static Users getByNameOrThrow(String name) {

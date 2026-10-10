@@ -9,6 +9,7 @@ import jakarta.ws.rs.ext.Provider;
 public class InvalidArgumnetExceptionMapper implements ExceptionMapper<IllegalArgumentException> {
     @Override
     public Response toResponse(IllegalArgumentException exception) {
+        exception.printStackTrace();
         ErrorResponseDto error = new ErrorResponseDto(
                 exception.getMessage(),
                 Response.Status.BAD_REQUEST.getStatusCode()
