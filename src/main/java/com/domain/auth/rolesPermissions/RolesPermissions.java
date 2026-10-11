@@ -5,6 +5,7 @@ import com.domain.auth.roles.Roles;
 import com.domain.shared.BaseEntity;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity

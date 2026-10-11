@@ -16,7 +16,17 @@ public class Roles extends BaseEntity {
     protected Roles() {}
 
     public static Roles getByIdOrThrow(Long id) {
+        if (id == null)
+            return null;
+
         return Roles.<Roles>findByIdOptional(id)
                 .orElseThrow(() -> new NotFoundException("Role (" + id + ") não encontrada."));
+    }
+
+    public static Roles getByName(String name) {
+        if (name == null || name.isBlank())
+            return null;
+
+        return Roles.find("name = ?1", name).firstResult();
     }
 }
