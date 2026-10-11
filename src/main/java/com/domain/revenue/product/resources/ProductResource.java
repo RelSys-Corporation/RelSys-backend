@@ -12,6 +12,7 @@ import com.domain.revenue.product.mappers.ProductDtoMapper;
 import com.domain.revenue.product.suppliers.productSupplier.ProductSupplier;
 import com.domain.revenue.product.suppliers.productSupplier.services.ProductSupplierService;
 import com.domain.revenue.supplier.Supplier;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -25,6 +26,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class ProductResource {
     @GET
+    @RolesAllowed("GET-ALL_PRODUCT")
     public Response getAllProducts() {
         List<ProductOutputDto> productOutputDtos = Product.<Product>listAll().stream()
                 .map(ProductDtoMapper::toDto)
@@ -35,6 +37,7 @@ public class ProductResource {
 
     @GET
     @Path("/barcode")
+    @RolesAllowed("GET-PRODUCT_BARCODE")
     public Response getProductByBarcode(@QueryParam("barcode") String barcode) {
         return Response.ok(ProductDtoMapper.toDto(
                 Product.getProductByBarcode(barcode)
@@ -43,6 +46,7 @@ public class ProductResource {
 
     @POST
     @Transactional
+    @RolesAllowed("CREATE-PRODUCT")
     public Response createProduct(ProductInputDto dto) {
         Product product = ProductSupplierService.createProduct(
                 dto.name(),
@@ -64,6 +68,7 @@ public class ProductResource {
     @POST
     @Path("/receive")
     @Transactional
+    @RolesAllowed("CREATE-PRODUCT_BATCH")
     public Response createProductBatch(ProductBatchReceiveInputDto dto) {
         ProductBatch productBatch = ProductBatchService.createProductBatch(
                 dto.productId(),
