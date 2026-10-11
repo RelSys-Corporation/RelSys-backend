@@ -4,6 +4,7 @@ import com.domain.revenue.supplier.Supplier;
 import com.domain.revenue.supplier.dtos.SupplierInputDto;
 import com.domain.revenue.supplier.dtos.SupplierOutputDto;
 import com.domain.revenue.supplier.mappers.SupplierDtoMapper;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Application;
@@ -17,6 +18,7 @@ import java.net.URI;
 @Produces(MediaType.APPLICATION_JSON)
 public class SupplierResource {
     @GET
+    @RolesAllowed("GET-ALL_SUPPLIER")
     public Response getAllSuppliers() {
         return Response.ok(Supplier.<Supplier>listAll().stream()
                         .map(SupplierDtoMapper::toDto)

@@ -1,6 +1,7 @@
 package com.domain.revenue.person.resources;
 
 import com.domain.revenue.person.subtype.physicalPerson.PhysicalPerson;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -12,6 +13,7 @@ import jakarta.ws.rs.core.Response;
 public class PersonResource {
     @POST
     @Transactional
+    @RolesAllowed("CREATE-PERSON")
     public Response createPerson() {
         /*
          * precisa trazer se é F, J ou D (digital, sem cpf/cnpj e outros dados)
@@ -23,6 +25,7 @@ public class PersonResource {
     @PUT
     @Transactional
     @Path("/{id}/roles")
+    @RolesAllowed("UPDATE-USER_ROLE")
     public Response updateRoles(@PathParam("id") Long id) {
         return null;
     }
