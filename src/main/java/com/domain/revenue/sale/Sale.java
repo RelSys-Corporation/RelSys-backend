@@ -2,8 +2,7 @@ package com.domain.revenue.sale;
 
 import com.domain.financial.paymentMethod.PaymentMethod;
 import com.domain.revenue.client.Client;
-import com.domain.revenue.sale.enums.saleStatus.SaleStatus;
-import com.domain.shared.BaseEntity;
+import com.domain.revenue.sale.constant.saleStatus.SaleStatus;
 import com.domain.shared.BaseEntityCompany;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;

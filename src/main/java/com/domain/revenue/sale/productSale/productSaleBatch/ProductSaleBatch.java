@@ -36,8 +36,7 @@ public class ProductSaleBatch extends BaseEntityCompany {
     private ProductSaleBatch(
             ProductSale productSale,
             ProductBatch productBatch,
-            BigDecimal quantity,
-            boolean applyDiscount
+            BigDecimal quantity
     ) {
         if (productSale == null)
             throw new DomainException("Deve ser informado o produto da venda para retirada do lote.");
@@ -51,21 +50,19 @@ public class ProductSaleBatch extends BaseEntityCompany {
         this.productSale = productSale;
         this.productBatch = productBatch;
         this.quantity = quantity;
-        this.applyDiscount = applyDiscount;
+        this.applyDiscount = productBatch.productSupplier.discountAllowed;
         this.purchasePrice = productBatch.purchasePrice;
     }
 
     public static ProductSaleBatch create(
             ProductSale productSale,
             ProductBatch productBatch,
-            BigDecimal quantity,
-            boolean applyDiscount
+            BigDecimal quantity
     ) {
         ProductSaleBatch productSaleBatch = new ProductSaleBatch(
                 productSale,
                 productBatch,
-                quantity,
-                applyDiscount
+                quantity
         );
         productSaleBatch.persist();
 
