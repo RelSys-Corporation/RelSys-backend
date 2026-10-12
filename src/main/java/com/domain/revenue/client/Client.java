@@ -17,4 +17,11 @@ public class Client extends BaseEntityCompany {
     public PersonStatus personStatus;
 
     protected Client() {}
+
+    public static Client getById(Long id) {
+        if (id == null)
+            return null;
+
+        return Client.findById(id);
+    }
 }

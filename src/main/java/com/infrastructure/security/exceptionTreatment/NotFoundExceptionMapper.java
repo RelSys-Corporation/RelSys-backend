@@ -10,6 +10,8 @@ import jakarta.ws.rs.ext.Provider;
 public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
     @Override
     public Response toResponse(NotFoundException exception) {
+        exception.printStackTrace();
+
         ErrorResponseDto error = new ErrorResponseDto(
                 exception.getMessage(),
                 Response.Status.NOT_FOUND.getStatusCode()

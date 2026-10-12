@@ -34,7 +34,7 @@ public class PersonStatus extends BaseEntity {
         return PersonStatus.<PersonStatus>findByIdOptional(status.getId())
                 .orElseThrow(() -> new IllegalStateException(
                         String.format(
-                                "Status '%s' (ID %d) não encontrado na tabela PERSON_STATUS.",
+                                "Status '%s' (%d) não encontrado na tabela PERSON_STATUS.",
                                 status.getDescription(),
                                 status.getId()
                         )

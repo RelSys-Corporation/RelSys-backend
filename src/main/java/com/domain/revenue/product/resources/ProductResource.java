@@ -13,6 +13,7 @@ import com.domain.revenue.product.suppliers.productSupplier.ProductSupplier;
 import com.domain.revenue.product.suppliers.productSupplier.services.ProductSupplierService;
 import com.domain.revenue.supplier.Supplier;
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -25,6 +26,9 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ProductResource {
+    @Inject
+    ProductBatchService productBatchService;
+
     @GET
     @RolesAllowed("GET-ALL_PRODUCT")
     public Response getAllProducts() {
@@ -70,7 +74,7 @@ public class ProductResource {
     @Transactional
     @RolesAllowed("CREATE-PRODUCT_BATCH")
     public Response createProductBatch(ProductBatchReceiveInputDto dto) {
-        ProductBatch productBatch = ProductBatchService.createProductBatch(
+        ProductBatch productBatch = productBatchService.createProductBatch(
                 dto.productId(),
                 dto.supplierId(),
                 dto.purchasePrice(),

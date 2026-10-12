@@ -1,6 +1,7 @@
 package com.domain.shared;
 
 import com.domain.system.company.Company;
+import com.domain.system.company.CompanyIdAttributeConverter;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.TenantId;
@@ -10,6 +11,7 @@ import org.hibernate.type.SqlTypes;
 public abstract class BaseEntityCompany extends BaseEntity {
     @TenantId
     @JdbcTypeCode(SqlTypes.BIGINT)
+    @Convert(converter = CompanyIdAttributeConverter.class)
     @Column(name = "COMPANY_ID", nullable = false)
     protected String companyId;
 
