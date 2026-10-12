@@ -4,6 +4,7 @@ import com.domain.revenue.product.Product;
 import com.domain.revenue.sale.Sale;
 import com.domain.shared.BaseEntity;
 import com.domain.shared.BaseEntityCompany;
+import com.infrastructure.exceptions.DomainException;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
@@ -34,4 +35,44 @@ public class ProductSale extends BaseEntityCompany {
     public BigDecimal productPrice;
 
     protected ProductSale() {}
+
+    private ProductSale(
+            Sale sale,
+            Product product,
+            BigDecimal quantity,
+            BigDecimal discountPercentage
+    ) {
+        if (sale == null)
+            throw new DomainException("Deve ser informada uma venda pra o produto da venda.");
+
+        if (product == null)
+            throw new DomainException("Deve ser informado o produto da venda.");
+
+        if (quantity == null || quantity.compareTo(BigDecimal.ZERO) <= 0)
+            throw new DomainException("A quantidade da venda deve ser informada e ser superior a 0.");
+
+        this.sale = sale;
+        this.product = product;
+        this.quantity = quantity;
+        this.discountPercentage = (discountPercentage == null ? BigDecimal.ZERO : discountPercentage);
+        this.productName = product.name;
+        this.productPrice = product.price;
+    }
+
+    public static ProductSale create(
+            Sale sale,
+            Product product,
+            BigDecimal quantity,
+            BigDecimal discountPercentage
+    ) {
+        ProductSale productSale = new ProductSale(
+                sale,
+                product,
+                quantity,
+                discountPercentage
+        );
+        productSale.persist();
+
+        return productSale;
+    }
 }

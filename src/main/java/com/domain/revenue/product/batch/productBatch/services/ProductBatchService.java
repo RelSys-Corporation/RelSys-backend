@@ -10,11 +10,13 @@ import jakarta.enterprise.context.ApplicationScoped;
 import com.infrastructure.exceptions.NotFoundException;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
 public class ProductBatchService {
-    public static ProductBatch createProductBatch(
+    public ProductBatch createProductBatch(
             Long productId,
             Long supplierId,
             BigDecimal purchasePrice,
@@ -30,5 +32,9 @@ public class ProductBatchService {
                 purchasePrice,
                 purchaseQuantity
         );
+    }
+
+    public List<ProductBatch> getProductBatchWithStockByProduct(Product product) {
+        return ProductBatch.list("productSupplier.product.id = ?1 and remainingQuantity > 0 order by expirationDate", product.id);
     }
 }
