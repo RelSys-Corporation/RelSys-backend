@@ -20,8 +20,8 @@ public class IdentityAugmentor implements SecurityIdentityAugmentor {
     @Override
     @ActivateRequestContext
     public Uni<SecurityIdentity> augment(SecurityIdentity identity, AuthenticationRequestContext context) {
-        if (identity.isAnonymous())
-            return Uni.createFrom().item(identity);
+        if (identity.isAnonymous()) {
+            return Uni.createFrom().item(identity);}
 
         return context.runBlocking(() -> {
             Set<String> authorities = new HashSet<>(identity.getRoles());

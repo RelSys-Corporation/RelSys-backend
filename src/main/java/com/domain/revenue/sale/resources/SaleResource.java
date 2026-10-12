@@ -8,6 +8,8 @@ import com.domain.revenue.sale.services.SaleService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -27,7 +29,11 @@ public class SaleResource {
     @POST
     @Transactional
     @RolesAllowed("CREATE-SALE")
-    public Response createSale(SaleInputDto dto) {
+    public Response createSale(
+            @NotNull(message = "Deve ser informado o conteudo da venda.")
+            @Valid
+            SaleInputDto dto
+    ) {
         Sale sale = saleService.createSale(
                 dto.clientId(),
                 dto.paymentMethodId(),

@@ -73,7 +73,7 @@ public class Product extends BaseEntityCompany {
 
     public static Product getByIdOrThrow(Long id) {
         return Product.<Product>findByIdOptional(id)
-                .orElseThrow(() -> new NotFoundException("Produto " + id + " informado não existe."));
+                .orElseThrow(() -> new NotFoundException("Produto (" + id + ") informado não existe."));
     }
 
 }
