@@ -1,4 +1,4 @@
-package com.infrastructure;
+package com.infrastructure.security.tenantId;
 
 import io.quarkus.hibernate.orm.PersistenceUnitExtension;
 
