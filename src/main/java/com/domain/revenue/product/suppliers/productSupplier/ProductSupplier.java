@@ -1,8 +1,7 @@
 package com.domain.revenue.product.suppliers.productSupplier;
 
 import com.domain.revenue.product.Product;
-import com.domain.revenue.supplier.Supplier;
-import com.domain.shared.BaseEntity;
+import com.domain.revenue.person.subtype.Supplier;
 import com.domain.shared.BaseEntityCompany;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
