@@ -15,10 +15,17 @@ public class PersonService {
             String name,
             String email
     ) {
-        return Person.create(
+        Person person = Person.create(
                 name,
-                email
+                email,
+                "D"
         );
+
+        if (person.id == null)
+            throw new IllegalStateException("Não foi possível criar a pessoa digital.");
+
+        return person;
+
     }
 
     public LegalPerson createLegalPerson(
@@ -26,11 +33,21 @@ public class PersonService {
             String email,
             String cnpj
     ) {
-        return LegalPerson.create(
+        Person person = Person.create(
                 name,
                 email,
+                "L"
+        );
+
+        LegalPerson legalPerson = LegalPerson.create(
+                person,
                 new CNPJ(cnpj)
         );
+
+        if (legalPerson.id == null)
+            throw new IllegalStateException("Não foi possível criar a pessoa juridica.");
+
+        return legalPerson;
     }
 
     public PhysicalPerson createPhysicalPerson(
@@ -38,10 +55,20 @@ public class PersonService {
             String email,
             String cpf
     ) {
-        return PhysicalPerson.create(
+        Person person = Person.create(
                 name,
                 email,
+                "P"
+        );
+
+        PhysicalPerson physicalPerson = PhysicalPerson.create(
+                person,
                 new CPF(cpf)
         );
+
+        if (physicalPerson.id == null)
+            throw new IllegalStateException("Não foi possível criar a pessoa fisica.");
+
+        return physicalPerson;
     }
 }

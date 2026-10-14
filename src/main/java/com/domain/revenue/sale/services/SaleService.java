@@ -1,7 +1,7 @@
 package com.domain.revenue.sale.services;
 
 import com.domain.financial.paymentMethod.PaymentMethod;
-import com.domain.revenue.client.Client;
+import com.domain.revenue.person.subtype.Client;
 import com.domain.revenue.product.Product;
 import com.domain.revenue.product.batch.productBatch.ProductBatch;
 import com.domain.revenue.product.batch.productBatch.services.ProductBatchService;

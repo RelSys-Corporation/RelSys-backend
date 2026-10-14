@@ -2,7 +2,7 @@ package com.domain.revenue.product.suppliers.productSupplier.services;
 
 import com.domain.revenue.product.Product;
 import com.domain.revenue.product.suppliers.productSupplier.ProductSupplier;
-import com.domain.revenue.supplier.Supplier;
+import com.domain.revenue.person.subtype.Supplier;
 import com.domain.shared.valueObjects.barcode.Barcode;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.enterprise.context.ApplicationScoped;

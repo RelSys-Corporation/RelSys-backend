@@ -4,15 +4,11 @@ import com.domain.revenue.product.Product;
 import com.domain.revenue.product.batch.productBatch.ProductBatch;
 import com.domain.revenue.product.suppliers.productSupplier.ProductSupplier;
 import com.domain.revenue.product.suppliers.productSupplier.services.ProductSupplierService;
-import com.domain.revenue.supplier.Supplier;
-import com.infrastructure.exceptions.DomainException;
+import com.domain.revenue.person.subtype.Supplier;
 import jakarta.enterprise.context.ApplicationScoped;
-import com.infrastructure.exceptions.NotFoundException;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @ApplicationScoped
 public class ProductBatchService {

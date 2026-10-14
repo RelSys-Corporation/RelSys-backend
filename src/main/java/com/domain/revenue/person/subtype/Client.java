@@ -1,4 +1,4 @@
-package com.domain.revenue.client;
+package com.domain.revenue.person.subtype;
 
 import com.domain.revenue.person.Person;
 import com.domain.revenue.person.constant.PersonStatus;

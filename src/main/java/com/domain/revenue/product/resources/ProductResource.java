@@ -9,9 +9,7 @@ import com.domain.revenue.product.batch.productBatch.services.ProductBatchServic
 import com.domain.revenue.product.dtos.ProductInputDto;
 import com.domain.revenue.product.dtos.ProductOutputDto;
 import com.domain.revenue.product.mappers.ProductDtoMapper;
-import com.domain.revenue.product.suppliers.productSupplier.ProductSupplier;
 import com.domain.revenue.product.suppliers.productSupplier.services.ProductSupplierService;
-import com.domain.revenue.supplier.Supplier;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

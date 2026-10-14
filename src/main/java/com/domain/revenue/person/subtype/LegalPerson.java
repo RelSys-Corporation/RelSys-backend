@@ -1,6 +1,7 @@
 package com.domain.revenue.person.subtype;
 
 import com.domain.revenue.person.Person;
+import com.domain.shared.BaseEntityCompany;
 import com.domain.shared.valueObjects.cnpj.CNPJ;
 import com.domain.shared.valueObjects.cnpj.CnpjAttributeConverter;
 import com.domain.system.company.Company;
@@ -13,9 +14,14 @@ import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "LEGAL_PERSON", schema = "REVENUE")
-@PrimaryKeyJoinColumn(name = "PERSON_ID", referencedColumnName = "ID")
-@DiscriminatorValue("L")
-public class LegalPerson extends Person {
+public class LegalPerson extends BaseEntityCompany {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PERSON_ID")
+    public Person person;
+
+    @Column(name = "PERSON_TYPE_ACRONYM", length = 2, insertable = false, updatable = false, nullable = false)
+    public String personTypeAcronym;
+
     @Convert(converter = CnpjAttributeConverter.class)
     @Column(name = "CNPJ", length = 14, nullable = false, unique = true)
     public CNPJ cnpj;
@@ -23,33 +29,29 @@ public class LegalPerson extends Person {
     protected LegalPerson() {}
 
     protected LegalPerson(
-            String name,
-            String email,
+            Person person,
             CNPJ cnpj
     ) {
-        super(name, email);
+        if (person == null)
+            throw new DomainException("A pessoa base deve ser informada.");
 
         if (cnpj == null)
             throw new DomainException("O CNPJ deve ser informado.");
 
+        this.person = person;
         this.cnpj = cnpj;
     }
 
     public static LegalPerson create(
-            String name,
-            String email,
+            Person person,
             CNPJ cnpj
     ) {
-        LegalPerson person = new LegalPerson(
-                name,
-                email,
+        LegalPerson legalPerson = new LegalPerson(
+                person,
                 cnpj
         );
+        legalPerson.persist();
 
-        person.companyId = person.getCompanyId();
-
-        person.persist();
-
-        return person;
+        return legalPerson;
     }
 }
