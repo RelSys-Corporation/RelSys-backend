@@ -26,6 +26,7 @@ public record Barcode(String value) {
     public static Barcode generateBarcode(Long id) {
         if (id == null)
             throw new IllegalStateException("O ID deve ser informado para geração do código de barras.");
+
         return new Barcode(String.format("%013d", id));
     }
 

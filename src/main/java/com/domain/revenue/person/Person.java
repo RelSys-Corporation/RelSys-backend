@@ -57,8 +57,4 @@ public class Person extends BaseEntityCompany {
 
         return person;
     }
-
-    public String getCompanyId() {
-        return this.companyId;
-    }
 }

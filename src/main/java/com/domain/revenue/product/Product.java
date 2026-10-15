@@ -61,7 +61,10 @@ public class Product extends BaseEntityCompany {
         return product;
     }
 
-    public static Product getProductByBarcode(String barcode) {
+    public static Product getProductByBarcode(Barcode barcode) {
+        if (barcode == null || barcode.toString().isBlank())
+            throw new DomainException("O identificador do produto precisa ser informado.");
+
         return Product.<Product>find("barcode", barcode)
                 .firstResultOptional()
                 .orElseThrow(() -> new NotFoundException(
@@ -72,6 +75,9 @@ public class Product extends BaseEntityCompany {
     }
 
     public static Product getByIdOrThrow(Long id) {
+        if (id == null)
+            throw new DomainException("O identificador do produto precisa ser informado.");
+
         return Product.<Product>findByIdOptional(id)
                 .orElseThrow(() -> new NotFoundException("Produto (" + id + ") informado não existe."));
     }

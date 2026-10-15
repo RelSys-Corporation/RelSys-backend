@@ -3,6 +3,7 @@ package com.domain.revenue.product.suppliers.productSupplier;
 import com.domain.revenue.product.Product;
 import com.domain.revenue.person.subtype.Supplier;
 import com.domain.shared.BaseEntityCompany;
+import com.infrastructure.exceptions.DomainException;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
@@ -60,6 +61,9 @@ public class ProductSupplier extends BaseEntityCompany {
     }
 
     public static ProductSupplier getByIdOrThrow(Long id) {
+        if (id == null)
+            throw new DomainException("O identificador do produto de fornecedor deve ser informado.");
+
         return ProductSupplier.<ProductSupplier>findByIdOptional(id)
                 .orElseThrow(() -> new NotFoundException("Produte de fornece " + id + "não encontrado."));
     }

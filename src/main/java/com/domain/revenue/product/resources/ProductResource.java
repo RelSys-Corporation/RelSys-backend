@@ -10,6 +10,7 @@ import com.domain.revenue.product.dtos.ProductInputDto;
 import com.domain.revenue.product.dtos.ProductOutputDto;
 import com.domain.revenue.product.mappers.ProductDtoMapper;
 import com.domain.revenue.product.suppliers.productSupplier.services.ProductSupplierService;
+import com.domain.shared.valueObjects.barcode.Barcode;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -41,9 +42,10 @@ public class ProductResource {
     @Path("/barcode")
     @RolesAllowed("GET-PRODUCT_BARCODE")
     public Response getProductByBarcode(@QueryParam("barcode") String barcode) {
-        return Response.ok(ProductDtoMapper.toDto(
-                Product.getProductByBarcode(barcode)
-        )).build();
+        Product product = Product.getProductByBarcode(new Barcode(barcode));
+        ProductOutputDto productOutputDto = ProductDtoMapper.toDto(product);
+
+        return Response.ok(product).build();
     }
 
     @POST

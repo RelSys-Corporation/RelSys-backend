@@ -2,6 +2,7 @@ package com.domain.auth.users;
 
 import com.domain.auth.roles.Roles;
 import com.domain.shared.BaseEntity;
+import com.infrastructure.exceptions.DomainException;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
@@ -49,11 +50,17 @@ public class Users extends BaseEntity {
     }
 
     public static Users getByIdOrThrow(Long id) {
+        if (id == null)
+            throw new DomainException("O identificador do usuário não foi informado.");
+
         return Users.<Users>findByIdOptional(id)
                 .orElseThrow(() -> new NotFoundException("Usuário (" + id + ") não encontrado."));
     }
 
     public static Users getByName(String name) {
+        if (name == null || name.isBlank())
+            return null;
+
         return Users.<Users>find(
                 "name = ?1",
                 name)
@@ -61,6 +68,9 @@ public class Users extends BaseEntity {
     }
 
     public static Users getByNameOrThrow(String name) {
+        if (name == null || name.isBlank())
+            throw new DomainException("O identifcador do usuário não foi informado.");
+
         return Users.<Users>find(
                 "name = ?1",
                 name)

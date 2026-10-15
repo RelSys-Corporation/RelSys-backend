@@ -17,7 +17,7 @@ public class PaymentMethod extends BaseEntityCompany {
 
     public static PaymentMethod getByIdOrThrow(Long id) {
         if (id == null)
-            throw new IllegalArgumentException("O método de pagamento deve ser informado.");
+            throw new IllegalArgumentException("O identificador do método de pagamento não foi informado.");
 
         return PaymentMethod.<PaymentMethod>findByIdOptional(id)
                 .orElseThrow(() -> new NotFoundException("Método de pagamento (" + id + ") não encontrado."));

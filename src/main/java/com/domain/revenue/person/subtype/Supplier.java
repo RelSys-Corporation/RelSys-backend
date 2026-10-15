@@ -3,6 +3,7 @@ package com.domain.revenue.person.subtype;
 import com.domain.revenue.person.Person;
 import com.domain.revenue.person.constant.PersonStatus;
 import com.domain.shared.BaseEntityCompany;
+import com.infrastructure.exceptions.DomainException;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
@@ -35,7 +36,10 @@ public class Supplier extends BaseEntityCompany {
     }
 
     public static Supplier getByIdOrThrow(Long id) {
+        if (id == null)
+            throw new DomainException("O identificador do fornecedor não foi informado.");
+
         return Supplier.<Supplier>findByIdOptional(id)
-                .orElseThrow(() -> new NotFoundException("Fornecedor " + id + " não encontrado."));
+                .orElseThrow(() -> new NotFoundException("Fornecedor (" + id + ") não encontrado."));
     }
 }
