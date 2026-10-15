@@ -59,7 +59,7 @@ public class Users extends BaseEntity {
 
     public static Users getByName(String name) {
         if (name == null || name.isBlank())
-            throw new DomainException("O identifcador do usuário não foi informado.");
+            return null;
 
         return Users.<Users>find(
                 "name = ?1",
