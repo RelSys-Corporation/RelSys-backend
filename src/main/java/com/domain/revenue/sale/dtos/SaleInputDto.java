@@ -14,7 +14,6 @@ public record SaleInputDto(
         BigDecimal discountPercentage,
         @NotNull(message = "Deve ser informado os produtos da venda.")
         @NotEmpty(message = "Deve ser informado os produtos da venda.")
-        @Valid
-        List<ProductSaleInputDto> products
+        List<@Valid ProductSaleInputDto> products
 ) {
 }

@@ -58,8 +58,7 @@ public class RoleResource {
             Long roleId,
             @NotNull(message = "Deve ser informado as permissões.")
             @NotEmpty(message = "A permissão deve ser enviada.")
-            @Valid
-            List<PermissionsInputDto> permissionsDto
+            List<@Valid PermissionsInputDto> permissionsDto
     ) {
         List<RolesPermissions> rolesPermissions = rolesPermissionsService.givePermissionsToRole(
                 roleId,
