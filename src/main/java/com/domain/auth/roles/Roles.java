@@ -36,10 +36,10 @@ public class Roles extends BaseEntity {
 
     public static Roles getByIdOrThrow(Long id) {
         if (id == null)
-            return null;
+            throw new DomainException("O identificar do cargo não foi informado.");
 
         return Roles.<Roles>findByIdOptional(id)
-                .orElseThrow(() -> new NotFoundException("Role (" + id + ") não encontrada."));
+                .orElseThrow(() -> new NotFoundException("Cargo (" + id + ") não encontrado."));
     }
 
     public static Roles getByName(String name) {

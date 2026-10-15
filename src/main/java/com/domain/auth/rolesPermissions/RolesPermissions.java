@@ -50,6 +50,9 @@ public class RolesPermissions extends BaseEntity {
     }
 
     public static List<Permissions> getPermissionByRole(Roles role) {
+        if (role == null)
+            throw new DomainException("O cargo deve ser informado.");
+
         return Permissions.<Permissions>find(
                         """
                         select rp.permission
