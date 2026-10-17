@@ -10,11 +10,11 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "CASH_PROCESS_ITEM", schema = "FINANCIAL")
 public class CashProcessItem extends BaseEntityCompany {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CASH_PROCESS_ID", nullable = false)
     public CashProcess cashProcess;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FINANCIAL_TITLE_ID", nullable = false)
     public FinancialTitle financialTitle;
 

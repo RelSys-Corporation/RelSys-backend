@@ -17,14 +17,14 @@ public class FinancialTitleBatch extends BaseEntityCompany {
     public BigDecimal financialTitleInstallment;
 
     @Column(name = "BATCH")
-    public BigDecimal batch;
+    public Long batch;
 
     protected FinancialTitleBatch() {}
 
     private FinancialTitleBatch(
             FinancialTitle financialTitle,
             BigDecimal financialTitleInstallment,
-            BigDecimal batch
+            Long batch
     ) {
         if (financialTitle == null)
             throw new DomainException("O titulo precisa ser informado para geração do lote.");
@@ -37,7 +37,7 @@ public class FinancialTitleBatch extends BaseEntityCompany {
     public static FinancialTitleBatch create(
             FinancialTitle financialTitle,
             BigDecimal financialTitleInstallment,
-            BigDecimal batch
+            Long batch
     ) {
         FinancialTitleBatch financialTitleBatch = new FinancialTitleBatch(
                 financialTitle,

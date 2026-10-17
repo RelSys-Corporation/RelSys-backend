@@ -17,15 +17,15 @@ public class FinancialTitle extends BaseEntityCompany {
     @JoinColumn(name = "FINANCIAL_ACCOUNT_ID", nullable = false)
     public FinancialAccount financialAccount;
 
-    @Column(name = "FINANCIAL_TITLE_INSTALLMENT", precision = 5)
-    public BigDecimal financialTitleInstallment;
+    @Column(name = "INSTALLMENT", precision = 5)
+    public BigDecimal installment;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID")
     public Person person;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FINANCIAL_STATUS_ID")
+    @JoinColumn(name = "FINANCIAL_TITLE_STATUS_ID")
     public FinancialTitleStatus financialTitleStatus;
 
     @Column(name = "VALUE", scale = 15, precision = 3, nullable = false)
@@ -68,7 +68,7 @@ public class FinancialTitle extends BaseEntityCompany {
             throw new DomainException("A data de vencimento precisa ser informada.");
 
         this.financialAccount = financialAccount;
-        this.financialTitleInstallment = financialTitleInstallment;
+        this.installment = financialTitleInstallment;
         this.person = person;
         this.financialTitleStatus = financialTitleStatus;
         this.value = value;

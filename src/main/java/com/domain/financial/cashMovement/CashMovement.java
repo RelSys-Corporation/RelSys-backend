@@ -13,11 +13,11 @@ import java.util.List;
 @Entity
 @Table(name = "CASH_MOVEMENT", schema = "FINANCIAL")
 public class CashMovement extends BaseEntityCompany {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CASH_PROCESS_ID", nullable = false)
     public CashProcess cashProcess;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FINANCIAL_ACCOUNT_ID", nullable = false)
     public FinancialAccount financialAccount;
 

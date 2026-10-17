@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "CASH_PROCESS", schema = "FINANCIAL")
 public class CashProcess extends BaseEntityCompany {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PAYMENT_METHOD_ID", nullable = false)
     public PaymentMethod paymentMethod;
 
