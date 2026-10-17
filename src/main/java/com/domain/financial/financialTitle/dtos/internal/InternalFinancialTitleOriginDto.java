@@ -1,4 +1,8 @@
 package com.domain.financial.financialTitle.dtos.internal;
 
-public record InternalFinancialTitleOriginDto() {
+import com.domain.revenue.sale.Sale;
+
+public record InternalFinancialTitleOriginDto(
+        Sale sale
+) {
 }
