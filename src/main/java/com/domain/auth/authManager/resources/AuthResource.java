@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
 
 import java.net.URI;
@@ -28,7 +29,8 @@ public class AuthResource {
     @POST
     @Path("/register")
     @Transactional
-    @RolesAllowed("CREATE-USER")
+    //@RolesAllowed("CREATE-USER")
+    @PermitAll
     public Response register(RegisterInputDto dto) {
         Users user = authService.register(dto.userName(), dto.userPassword(), dto.roleId());
 
@@ -42,14 +44,14 @@ public class AuthResource {
     @Transactional
     @PermitAll
     public Response login(LoginInputDto dto) {
-        String token = authService.processLogin(
+        NewCookie authCookie = authService.processLogin(
                 dto.userName(),
                 dto.userPassword(),
                 dto.companyId()
         );
 
-        LoginOutputDto loginOutputDto = LoginDtoMapper.toDto(token);
-
-        return Response.ok(loginOutputDto).build();
+        return Response.ok()
+                .cookie(authCookie)
+                .build();
     }
 }

@@ -9,6 +9,7 @@ import io.quarkus.hibernate.orm.panache.Panache;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.core.NewCookie;
 import org.hibernate.Session;
 
 @ApplicationScoped
@@ -28,7 +29,7 @@ public class AuthService {
         );
     }
 
-    public String processLogin(String userName, String userPassword, Long companyId) {
+    public NewCookie processLogin(String userName, String userPassword, Long companyId) {
         Users user = Users.getByName(userName);
 
         if (user == null || !HashUtils.verify(user.password, userPassword)) {
@@ -37,6 +38,14 @@ public class AuthService {
 
         Company company = Company.getById(companyId);
 
-        return tokenService.generateToken(user, company);
+        String token = tokenService.generateToken(user, company);
+
+        return new NewCookie.Builder("Bearer")
+                .value(token)
+                .path("/")
+                .httpOnly(true)
+                //.secure()
+                .sameSite(NewCookie.SameSite.LAX)
+                .build();
     }
 }

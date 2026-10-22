@@ -20,6 +20,7 @@ public class IdentityAugmentor implements SecurityIdentityAugmentor {
     @Override
     @ActivateRequestContext
     public Uni<SecurityIdentity> augment(SecurityIdentity identity, AuthenticationRequestContext context) {
+        System.out.println("a:" + identity.isAnonymous());
         if (identity.isAnonymous()) {
             return Uni.createFrom().item(identity);}
 
@@ -34,7 +35,7 @@ public class IdentityAugmentor implements SecurityIdentityAugmentor {
                             .forEach(p -> authorities.add(p.name));
                 }
             }
-
+            System.out.println(authorities);
             return QuarkusSecurityIdentity
                     .builder(identity)
                     .addRoles(authorities)
