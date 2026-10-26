@@ -12,6 +12,10 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.NewCookie;
 import org.hibernate.Session;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Date;
+
 @ApplicationScoped
 public class AuthService {
     @Inject
@@ -46,6 +50,7 @@ public class AuthService {
                 .httpOnly(true)
                 //.secure()
                 .sameSite(NewCookie.SameSite.LAX)
+                .maxAge(1000 * 60 * 60 * 8)
                 .build();
     }
 }

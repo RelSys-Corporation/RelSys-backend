@@ -9,17 +9,17 @@ import jakarta.persistence.*;
 @Table(name = "COMPANY", schema = "SYSTEM")
 public class Company extends BaseEntity {
     @Column(name = "CORPORATE_NAME", length = 200, nullable = false, unique = true)
-    String corporateName;
+    public String corporateName;
 
     @Column(name = "TRADE_NAME", length = 200)
-    String tradeName;
+    public String tradeName;
 
     @Column(name = "IS_HEADQUARTER", nullable = false)
-    boolean isHeadquarter;
+    public boolean isHeadquarter;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HEADQUARTER_COMPANY_ID")
-    Company headquarterCompany;
+    public Company headquarterCompany;
 
     protected Company() {}
 
