@@ -2,6 +2,7 @@ package com.domain.auth.users.services;
 
 import com.domain.auth.users.dtos.UserCompanyOutputDto;
 import com.domain.auth.users.mappers.UserDtoMapper;
+import com.domain.auth.users.usersCompany.UsersCompany;
 import com.domain.system.company.Company;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -11,10 +12,12 @@ import java.util.List;
 @ApplicationScoped
 public class UserService {
     public List<UserCompanyOutputDto> getUserAllowedCompanies(Long userId) {
-        // TODO update to new table
         List<UserCompanyOutputDto> companies = new ArrayList<>();
 
-        for (Company company : Company.<Company>findAll().list()) {
+        for (Company company : UsersCompany.<Company>list("""
+                SELECT uc.company
+                  FROM UsersCompany uc
+                 WHERE uc.user.id = ?1""", userId)) {
             companies.add(UserDtoMapper.toDto(company));
         }
 

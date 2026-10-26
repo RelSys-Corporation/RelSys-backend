@@ -12,12 +12,14 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
 
 import java.net.URI;
+import java.util.List;
 
 @Path("/auth")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -29,8 +31,7 @@ public class AuthResource {
     @POST
     @Path("/register")
     @Transactional
-    //@RolesAllowed("CREATE-USER")
-    @PermitAll
+    @RolesAllowed("CREATE-USER")
     public Response register(RegisterInputDto dto) {
         Users user = authService.register(dto.userName(), dto.userPassword(), dto.roleId());
 
@@ -53,5 +54,30 @@ public class AuthResource {
         return Response.ok()
                 .cookie(authCookie)
                 .build();
+    }
+
+    @POST
+    @Path("/firstUser")
+    @Transactional
+    @PermitAll
+    public Response createFirstUser(RegisterInputDto dto) {
+        Users user = authService.createFirstUser(dto.userName(), dto.userPassword(), dto.roleId());
+
+        URI uri = URI.create("/user/" + user.id);
+
+        return Response.created(uri).build();
+    }
+
+    @PUT
+    @Path("/user/{id}")
+    @Transactional
+    @RolesAllowed("UPDATE-USER-COMPANIES")
+    public Response updateUserCompanies(
+            @PathParam("id") Long userId,
+            @NotEmpty(message = "As empresas precisam ser informadas")
+            List<Long> companiesId
+    ) {
+        authService.updateUsersCompanies(userId, companiesId);
+        return Response.ok().build();
     }
 }

@@ -2,19 +2,17 @@ package com.domain.auth.authManager.services;
 
 import com.domain.auth.roles.Roles;
 import com.domain.auth.users.Users;
+import com.domain.auth.users.usersCompany.UsersCompany;
 import com.domain.system.company.Company;
 import com.infrastructure.exceptions.InvalidCredentialException;
 import com.infrastructure.security.utils.HashUtils;
-import io.quarkus.hibernate.orm.panache.Panache;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.NewCookie;
-import org.hibernate.Session;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 @ApplicationScoped
 public class AuthService {
@@ -50,7 +48,27 @@ public class AuthService {
                 .httpOnly(true)
                 //.secure()
                 .sameSite(NewCookie.SameSite.LAX)
-                .maxAge(1000 * 60 * 60 * 8)
+                .expiry(Date.from(
+                        Instant.now().plusSeconds(60 * 60 * 8)
+                ))
                 .build();
+    }
+
+
+    public Users createFirstUser(String userName, String userPassword, Long roleId) {
+        if (Users.findAll().list().isEmpty())
+            return register(userName, userPassword, roleId);
+
+        throw new IllegalStateException("O primeiro usuário já foi criado.");
+    }
+
+    public void updateUsersCompanies(
+            Long userId,
+            List<Long> companiesId
+    ) {
+        Users user = Users.getByIdOrThrow(userId);
+
+        for (Long companyId : companiesId)
+            UsersCompany.create(user, Company.getByIdOrThrow(companyId));
     }
 }
