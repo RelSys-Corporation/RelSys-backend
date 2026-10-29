@@ -73,4 +73,17 @@ public class RoleResource {
                 .entity(rolesPermissionsOutputDto)
                 .build();
     }
+
+    @GET
+    @Path("/all")
+    @RolesAllowed("GET-ALL_ROLES")
+    public Response getAllRoles() {
+        List<RoleOutputDto> roles = Roles.<Roles>findAll()
+                .list()
+                .stream()
+                .map(RoleDtoMapper::toDto)
+                .toList();
+
+        return Response.ok(roles).build();
+    }
 }

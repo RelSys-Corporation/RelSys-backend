@@ -12,11 +12,14 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
 
 import java.net.URI;
+import java.util.List;
 
 @Path("/auth")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -42,14 +45,39 @@ public class AuthResource {
     @Transactional
     @PermitAll
     public Response login(LoginInputDto dto) {
-        String token = authService.processLogin(
+        NewCookie authCookie = authService.processLogin(
                 dto.userName(),
                 dto.userPassword(),
                 dto.companyId()
         );
 
-        LoginOutputDto loginOutputDto = LoginDtoMapper.toDto(token);
+        return Response.ok()
+                .cookie(authCookie)
+                .build();
+    }
 
-        return Response.ok(loginOutputDto).build();
+    @POST
+    @Path("/firstUser")
+    @Transactional
+    @PermitAll
+    public Response createFirstUser(RegisterInputDto dto) {
+        Users user = authService.createFirstUser(dto.userName(), dto.userPassword(), dto.roleId());
+
+        URI uri = URI.create("/user/" + user.id);
+
+        return Response.created(uri).build();
+    }
+
+    @PUT
+    @Path("/user/{id}")
+    @Transactional
+    @RolesAllowed("UPDATE-USER-COMPANIES")
+    public Response updateUserCompanies(
+            @PathParam("id") Long userId,
+            @NotEmpty(message = "As empresas precisam ser informadas")
+            List<Long> companiesId
+    ) {
+        authService.updateUsersCompanies(userId, companiesId);
+        return Response.ok().build();
     }
 }

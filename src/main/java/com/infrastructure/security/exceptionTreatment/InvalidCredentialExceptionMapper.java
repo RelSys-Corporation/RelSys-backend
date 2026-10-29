@@ -10,6 +10,7 @@ import jakarta.ws.rs.ext.Provider;
 public class InvalidCredentialExceptionMapper implements ExceptionMapper<InvalidCredentialException> {
     @Override
     public Response toResponse(InvalidCredentialException exception) {
+        exception.printStackTrace();
         ErrorResponseDto error = new ErrorResponseDto(
                 exception.getMessage(),
                 Response.Status.UNAUTHORIZED.getStatusCode()

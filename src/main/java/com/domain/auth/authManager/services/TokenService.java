@@ -19,6 +19,7 @@ public class TokenService {
         Set<String> authorities = Set.of(user.role.name);
 
         return Jwt.issuer(System.getenv("JWT_ISSUER"))
+                .subject(user.id.toString())
                 .upn(user.name)
                 .claim("companyId", (company == null ? 0 : company.id))
                 .groups(authorities)

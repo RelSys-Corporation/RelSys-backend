@@ -1,4 +1,4 @@
-package com.domain.revenue.person.constant;
+package com.domain.revenue.person.constants;
 
 import com.domain.shared.BaseEntity;
 import jakarta.persistence.*;

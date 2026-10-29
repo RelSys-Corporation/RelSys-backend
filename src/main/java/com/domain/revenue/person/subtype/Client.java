@@ -1,7 +1,7 @@
 package com.domain.revenue.person.subtype;
 
 import com.domain.revenue.person.Person;
-import com.domain.revenue.person.constant.PersonStatus;
+import com.domain.revenue.person.constants.PersonStatus;
 import com.domain.shared.BaseEntityCompany;
 import jakarta.persistence.*;
 
