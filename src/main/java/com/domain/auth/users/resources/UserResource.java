@@ -1,8 +1,12 @@
 package com.domain.auth.users.resources;
 
+import com.domain.auth.users.Users;
 import com.domain.auth.users.dtos.UserCompanyOutputDto;
+import com.domain.auth.users.dtos.UserOutputDto;
+import com.domain.auth.users.mappers.UserDtoMapper;
 import com.domain.auth.users.services.UserService;
 import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -23,6 +27,18 @@ public class UserResource {
 
     @Inject
     UserService userService;
+
+    @GET
+    @Path("/all")
+    @RolesAllowed("GET-ALL_USER")
+    public Response getAllUsers() {
+        List<UserOutputDto> users = Users.<Users>findAll()
+                .stream()
+                .map(UserDtoMapper::toDto)
+                .toList();
+
+        return Response.ok(users).build();
+    }
 
     @GET
     @Path("/companies")

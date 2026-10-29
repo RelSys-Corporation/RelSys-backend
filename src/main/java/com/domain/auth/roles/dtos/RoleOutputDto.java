@@ -1,6 +1,7 @@
 package com.domain.auth.roles.dtos;
 
 public record RoleOutputDto(
-        Long id
+        Long id,
+        String name
 ) {
 }
