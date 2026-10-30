@@ -14,7 +14,6 @@ import java.util.List;
 public class CashProcessService {
     public CashProcess createCashProcess(
             PaymentMethod paymentMethod,
-            LocalDateTime processDate,
             List<InternalCashProcessItemDto> cashProcessItemDtos
     ) {
         BigDecimal totalValue = cashProcessItemDtos.stream()
@@ -26,7 +25,7 @@ public class CashProcessService {
         CashProcess cashProcess = CashProcess.create(
                 paymentMethod,
                 totalValue,
-                processDate
+                LocalDateTime.now()
         );
 
         for (InternalCashProcessItemDto dto : cashProcessItemDtos) {

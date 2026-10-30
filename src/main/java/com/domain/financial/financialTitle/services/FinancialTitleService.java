@@ -10,37 +10,40 @@ import com.domain.financial.financialTitle.dtos.internal.InternalFinancialTitleO
 import com.domain.financial.financialTitle.dtos.internal.InternalFinancialTitleResultDto;
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @ApplicationScoped
 public class FinancialTitleService {
     public InternalFinancialTitleResultDto createFinancialTitle(
-            InternalFinancialTitleDto financialTitleDto,
-            FinancialTitleBatch financialTitleBatch,
+            List<InternalFinancialTitleDto> financialTitleDtos,
             InternalFinancialTitleOriginDto originDto
     ) {
-        FinancialTitle financialTitle = FinancialTitle.create(
-                financialTitleDto.financialAccount(),
-                financialTitleDto.financialTitleInstallment(),
-                financialTitleDto.person(),
-                financialTitleDto.financialTitleStatus(),
-                financialTitleDto.value(),
-                financialTitleDto.payedValue(),
-                financialTitleDto.expirationDate(),
-                financialTitleDto.fullPayDate()
-        );
+        List<FinancialTitle> titles = new ArrayList<>();
+        FinancialTitleBatch batch = FinancialTitleBatch.create();
 
-        FinancialTitleBatch batch = FinancialTitleBatch.create(
-                financialTitle,
-                financialTitleDto.financialTitleInstallment(),
-                financialTitleBatch.batch
-        );
+        for (InternalFinancialTitleDto dto : financialTitleDtos) {
+            titles.add(
+                    FinancialTitle.create(
+                            dto.financialAccount(),
+                            dto.financialTitleInstallment(),
+                            batch,
+                            dto.person(),
+                            dto.financialTitleStatus(),
+                            dto.value(),
+                            dto.payedValue(),
+                            dto.expirationDate(),
+                            dto.fullPayDate()
+                    ));
+        }
+
 
         FinancialTitleOrigin.create(
                 batch,
                 originDto.sale()
         );
 
-        return new InternalFinancialTitleResultDto(financialTitle, batch);
+        return new InternalFinancialTitleResultDto(titles, batch);
     }
 }

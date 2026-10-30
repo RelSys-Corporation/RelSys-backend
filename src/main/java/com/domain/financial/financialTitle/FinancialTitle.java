@@ -20,6 +20,10 @@ public class FinancialTitle extends BaseEntityCompany {
     @Column(name = "INSTALLMENT", precision = 5)
     public BigDecimal installment;
 
+    @ManyToOne
+    @JoinColumn(name = "FINANCIAL_TITLE_BATCH_ID", nullable = false)
+    public FinancialTitleBatch batch;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID")
     public Person person;
@@ -45,6 +49,7 @@ public class FinancialTitle extends BaseEntityCompany {
     private FinancialTitle(
             FinancialAccount financialAccount,
             BigDecimal financialTitleInstallment,
+            FinancialTitleBatch batch,
             Person person,
             FinancialTitleStatus financialTitleStatus,
             BigDecimal value,
@@ -58,6 +63,9 @@ public class FinancialTitle extends BaseEntityCompany {
         if (financialTitleStatus == null)
             throw new DomainException("O status do titulo preicsa ser informado.");
 
+        if (batch == null)
+            throw new DomainException("O lote precisa ser informado.");
+
         if (value == null || value.compareTo(BigDecimal.ZERO) <= 0)
             throw new DomainException("O valor do titulo precisa ser maior do que 0.");
 
@@ -69,6 +77,7 @@ public class FinancialTitle extends BaseEntityCompany {
 
         this.financialAccount = financialAccount;
         this.installment = financialTitleInstallment;
+        this.batch = batch;
         this.person = person;
         this.financialTitleStatus = financialTitleStatus;
         this.value = value;
@@ -80,6 +89,7 @@ public class FinancialTitle extends BaseEntityCompany {
     public static FinancialTitle create(
             FinancialAccount financialAccount,
             BigDecimal financialTitleInstallment,
+            FinancialTitleBatch batch,
             Person person,
             FinancialTitleStatus financialTitleStatus,
             BigDecimal value,
@@ -90,6 +100,7 @@ public class FinancialTitle extends BaseEntityCompany {
         FinancialTitle financialTitle = new FinancialTitle(
                 financialAccount,
                 financialTitleInstallment,
+                batch,
                 person,
                 financialTitleStatus,
                 value,
