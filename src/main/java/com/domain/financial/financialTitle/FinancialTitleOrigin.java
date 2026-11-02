@@ -1,11 +1,9 @@
 package com.domain.financial.financialTitle;
 
-import com.domain.revenue.sale.Sale;
+import com.domain.commercial.sale.Sale;
 import com.domain.shared.BaseEntityCompany;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
-
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "FINANCIAL_TITLE_ORIGIN", schema = "FINANCIAL")
