@@ -9,9 +9,6 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "FINANCIAL_TITLE_BATCH", schema = "FINANCIAL")
 public class FinancialTitleBatch extends BaseEntityCompany {
-    @Column(name = "BATCH")
-    public Long batch;
-
     protected FinancialTitleBatch() {}
 
     public static FinancialTitleBatch create() {

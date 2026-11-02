@@ -1,6 +1,6 @@
-package com.domain.revenue.person.subtype;
+package com.domain.crm.person.subtype;
 
-import com.domain.revenue.person.Person;
+import com.domain.crm.person.Person;
 import com.domain.shared.BaseEntityCompany;
 import com.domain.shared.valueObjects.cpf.CPF;
 import com.domain.shared.valueObjects.cpf.CpfAttributeConverter;
@@ -8,7 +8,7 @@ import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "PHYSICAL_PERSON", schema = "REVENUE")
+@Table(name = "PHYSICAL_PERSON", schema = "CRM")
 public class PhysicalPerson extends BaseEntityCompany {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID")

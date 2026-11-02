@@ -1,7 +1,7 @@
-package com.domain.revenue.product.suppliers.productSupplier;
+package com.domain.commercial.product.suppliers.productSupplier;
 
-import com.domain.revenue.product.Product;
-import com.domain.revenue.person.subtype.Supplier;
+import com.domain.commercial.product.Product;
+import com.domain.crm.person.subtype.Supplier;
 import com.domain.shared.BaseEntityCompany;
 import com.infrastructure.exceptions.DomainException;
 import com.infrastructure.exceptions.NotFoundException;
@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "PRODUCT_SUPPLIER", schema = "REVENUE")
+@Table(name = "PRODUCT_SUPPLIER", schema = "COMMERCIAL")
 public class ProductSupplier extends BaseEntityCompany {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_ID", nullable = false)

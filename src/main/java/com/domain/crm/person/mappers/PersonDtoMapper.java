@@ -1,9 +1,9 @@
-package com.domain.revenue.person.mappers;
+package com.domain.crm.person.mappers;
 
-import com.domain.revenue.person.Person;
-import com.domain.revenue.person.dtos.PersonOutputDto;
-import com.domain.revenue.person.subtype.LegalPerson;
-import com.domain.revenue.person.subtype.PhysicalPerson;
+import com.domain.crm.person.Person;
+import com.domain.crm.person.dtos.PersonOutputDto;
+import com.domain.crm.person.subtype.LegalPerson;
+import com.domain.crm.person.subtype.PhysicalPerson;
 
 public class PersonDtoMapper {
     public static PersonOutputDto toDto(Person entity) {

@@ -1,4 +1,4 @@
-package com.domain.revenue.product;
+package com.domain.commercial.product;
 
 import com.domain.shared.BaseEntityCompany;
 import com.domain.shared.valueObjects.barcode.Barcode;
@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "PRODUCT", schema = "REVENUE")
+@Table(name = "PRODUCT", schema = "COMMERCIAL")
 public class Product extends BaseEntityCompany {
     @Column(name = "NAME", length = 100, nullable = false, unique = true)
     public String name;

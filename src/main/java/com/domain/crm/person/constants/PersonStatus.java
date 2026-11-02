@@ -1,10 +1,10 @@
-package com.domain.revenue.person.constants;
+package com.domain.crm.person.constants;
 
 import com.domain.shared.BaseEntity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "PERSON_STATUS", schema = "REVENUE")
+@Table(name = "PERSON_STATUS", schema = "CRM")
 public class PersonStatus extends BaseEntity {
     @Column(name = "NAME", nullable = false, unique = true)
     public String name;

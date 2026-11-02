@@ -1,4 +1,4 @@
-package com.domain.revenue.person;
+package com.domain.crm.person;
 
 import com.domain.shared.BaseEntityCompany;
 import com.infrastructure.exceptions.DomainException;
@@ -7,10 +7,9 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @Entity
-@Table(name = "PERSON", schema = "REVENUE")
+@Table(name = "PERSON", schema = "CRM")
 public class Person extends BaseEntityCompany {
     @Column(name = "NAME", length = 200, nullable = false)
     public String name;

@@ -2,7 +2,7 @@ package com.domain.financial.financialTitle.dtos.internal;
 
 import com.domain.financial.financialAccount.FinancialAccount;
 import com.domain.financial.financialTitle.constants.FinancialTitleStatus;
-import com.domain.revenue.person.Person;
+import com.domain.crm.person.Person;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

@@ -1,12 +1,12 @@
-package com.domain.revenue.person.subtype;
+package com.domain.crm.person.subtype;
 
-import com.domain.revenue.person.Person;
-import com.domain.revenue.person.constants.PersonStatus;
+import com.domain.crm.person.Person;
+import com.domain.crm.person.constants.PersonStatus;
 import com.domain.shared.BaseEntityCompany;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "CLIENT", schema = "REVENUE")
+@Table(name = "CLIENT", schema = "CRM")
 public class Client extends BaseEntityCompany {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)

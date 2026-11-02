@@ -1,18 +1,15 @@
-package com.domain.revenue.sale.productSale;
+package com.domain.commercial.sale.productSale;
 
-import com.domain.revenue.product.Product;
-import com.domain.revenue.sale.Sale;
-import com.domain.shared.BaseEntity;
+import com.domain.commercial.product.Product;
+import com.domain.commercial.sale.Sale;
 import com.domain.shared.BaseEntityCompany;
 import com.infrastructure.exceptions.DomainException;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "PRODUCT_SALE", schema = "REVENUE")
+@Table(name = "PRODUCT_SALE", schema = "COMMERCIAL")
 public class ProductSale extends BaseEntityCompany {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SALE_ID", nullable = false)

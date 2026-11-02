@@ -1,14 +1,14 @@
-package com.domain.revenue.person.subtype;
+package com.domain.crm.person.subtype;
 
-import com.domain.revenue.person.Person;
-import com.domain.revenue.person.constants.PersonStatus;
+import com.domain.crm.person.Person;
+import com.domain.crm.person.constants.PersonStatus;
 import com.domain.shared.BaseEntityCompany;
 import com.infrastructure.exceptions.DomainException;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "SUPPLIER", schema = "REVENUE")
+@Table(name = "SUPPLIER", schema = "CRM")
 public class Supplier extends BaseEntityCompany {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)

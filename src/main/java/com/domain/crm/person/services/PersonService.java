@@ -1,13 +1,11 @@
-package com.domain.revenue.person.services;
+package com.domain.crm.person.services;
 
-import com.domain.revenue.person.Person;
-import com.domain.revenue.person.subtype.LegalPerson;
-import com.domain.revenue.person.subtype.PhysicalPerson;
+import com.domain.crm.person.Person;
+import com.domain.crm.person.subtype.LegalPerson;
+import com.domain.crm.person.subtype.PhysicalPerson;
 import com.domain.shared.valueObjects.cnpj.CNPJ;
 import com.domain.shared.valueObjects.cpf.CPF;
 import jakarta.enterprise.context.ApplicationScoped;
-
-import java.util.List;
 
 @ApplicationScoped
 public class PersonService {

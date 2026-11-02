@@ -1,4 +1,4 @@
-package com.domain.revenue.sale.dtos;
+package com.domain.commercial.sale.dtos;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 

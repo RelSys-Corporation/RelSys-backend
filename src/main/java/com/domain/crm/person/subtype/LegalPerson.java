@@ -1,19 +1,14 @@
-package com.domain.revenue.person.subtype;
+package com.domain.crm.person.subtype;
 
-import com.domain.revenue.person.Person;
+import com.domain.crm.person.Person;
 import com.domain.shared.BaseEntityCompany;
 import com.domain.shared.valueObjects.cnpj.CNPJ;
 import com.domain.shared.valueObjects.cnpj.CnpjAttributeConverter;
-import com.domain.system.company.Company;
-import com.domain.system.company.CompanyIdAttributeConverter;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.TenantId;
-import org.hibernate.type.SqlTypes;
 
 @Entity
-@Table(name = "LEGAL_PERSON", schema = "REVENUE")
+@Table(name = "LEGAL_PERSON", schema = "CRM")
 public class LegalPerson extends BaseEntityCompany {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID")

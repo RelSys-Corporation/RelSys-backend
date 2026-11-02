@@ -1,4 +1,4 @@
-package com.domain.revenue.person.dtos;
+package com.domain.crm.person.dtos;
 
 public record PersonOutputDto(
         Long id

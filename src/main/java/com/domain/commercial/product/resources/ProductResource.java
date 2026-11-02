@@ -1,15 +1,15 @@
-package com.domain.revenue.product.resources;
+package com.domain.commercial.product.resources;
 
-import com.domain.revenue.product.Product;
-import com.domain.revenue.product.batch.productBatch.ProductBatch;
-import com.domain.revenue.product.batch.productBatch.dtos.ProductBatchReceiveInputDto;
-import com.domain.revenue.product.batch.productBatch.dtos.ProductBatchReceiveOutputDto;
-import com.domain.revenue.product.batch.productBatch.mappers.ProductBatchDtoMapper;
-import com.domain.revenue.product.batch.productBatch.services.ProductBatchService;
-import com.domain.revenue.product.dtos.ProductInputDto;
-import com.domain.revenue.product.dtos.ProductOutputDto;
-import com.domain.revenue.product.mappers.ProductDtoMapper;
-import com.domain.revenue.product.suppliers.productSupplier.services.ProductSupplierService;
+import com.domain.commercial.product.Product;
+import com.domain.stock.productBatch.ProductBatch;
+import com.domain.stock.productBatch.dtos.ProductBatchReceiveInputDto;
+import com.domain.stock.productBatch.dtos.ProductBatchReceiveOutputDto;
+import com.domain.stock.productBatch.mappers.ProductBatchDtoMapper;
+import com.domain.stock.productBatch.services.ProductBatchService;
+import com.domain.commercial.product.dtos.ProductInputDto;
+import com.domain.commercial.product.dtos.ProductOutputDto;
+import com.domain.commercial.product.mappers.ProductDtoMapper;
+import com.domain.commercial.product.suppliers.productSupplier.services.ProductSupplierService;
 import com.domain.shared.valueObjects.barcode.Barcode;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;

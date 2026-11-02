@@ -6,15 +6,13 @@ import com.domain.financial.cashProcess.CashProcess;
 import com.domain.financial.cashProcess.dtos.internal.InternalCashProcessItemDto;
 import com.domain.financial.cashProcess.services.CashProcessService;
 import com.domain.financial.financialAccount.FinancialAccount;
-import com.domain.financial.financialTitle.FinancialTitle;
-import com.domain.financial.financialTitle.FinancialTitleOrigin;
 import com.domain.financial.financialTitle.constants.FinancialTitleStatus;
 import com.domain.financial.financialTitle.dtos.internal.InternalFinancialTitleDto;
 import com.domain.financial.financialTitle.dtos.internal.InternalFinancialTitleOriginDto;
 import com.domain.financial.financialTitle.dtos.internal.InternalFinancialTitleResultDto;
 import com.domain.financial.financialTitle.services.FinancialTitleService;
 import com.domain.financial.paymentMethod.PaymentMethod;
-import com.domain.revenue.person.Person;
+import com.domain.crm.person.Person;
 import jakarta.inject.Inject;
 
 import java.math.BigDecimal;

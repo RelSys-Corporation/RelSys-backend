@@ -1,10 +1,10 @@
-package com.domain.revenue.sale.resources;
+package com.domain.commercial.sale.resources;
 
-import com.domain.revenue.sale.Sale;
-import com.domain.revenue.sale.dtos.SaleInputDto;
-import com.domain.revenue.sale.dtos.SaleOutputDto;
-import com.domain.revenue.sale.mappers.SaleDtoMapper;
-import com.domain.revenue.sale.services.SaleService;
+import com.domain.commercial.sale.Sale;
+import com.domain.commercial.sale.dtos.SaleInputDto;
+import com.domain.commercial.sale.dtos.SaleOutputDto;
+import com.domain.commercial.sale.mappers.SaleDtoMapper;
+import com.domain.commercial.sale.services.SaleService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

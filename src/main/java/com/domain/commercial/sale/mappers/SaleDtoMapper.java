@@ -1,7 +1,7 @@
-package com.domain.revenue.sale.mappers;
+package com.domain.commercial.sale.mappers;
 
-import com.domain.revenue.sale.Sale;
-import com.domain.revenue.sale.dtos.SaleOutputDto;
+import com.domain.commercial.sale.Sale;
+import com.domain.commercial.sale.dtos.SaleOutputDto;
 
 public class SaleDtoMapper {
     public static SaleOutputDto toDto(Sale sale) {

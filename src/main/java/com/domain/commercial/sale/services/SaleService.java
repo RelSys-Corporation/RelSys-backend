@@ -1,15 +1,15 @@
-package com.domain.revenue.sale.services;
+package com.domain.commercial.sale.services;
 
 import com.domain.financial.paymentMethod.PaymentMethod;
-import com.domain.revenue.person.subtype.Client;
-import com.domain.revenue.product.Product;
-import com.domain.revenue.product.batch.productBatch.ProductBatch;
-import com.domain.revenue.product.batch.productBatch.services.ProductBatchService;
-import com.domain.revenue.sale.Sale;
-import com.domain.revenue.sale.constant.saleStatus.SaleStatus;
-import com.domain.revenue.sale.dtos.ProductSaleInputDto;
-import com.domain.revenue.sale.productSale.ProductSale;
-import com.domain.revenue.sale.productSale.productSaleBatch.ProductSaleBatch;
+import com.domain.crm.person.subtype.Client;
+import com.domain.commercial.product.Product;
+import com.domain.stock.productBatch.ProductBatch;
+import com.domain.stock.productBatch.services.ProductBatchService;
+import com.domain.commercial.sale.Sale;
+import com.domain.commercial.sale.constant.saleStatus.SaleStatus;
+import com.domain.commercial.sale.dtos.ProductSaleInputDto;
+import com.domain.commercial.sale.productSale.ProductSale;
+import com.domain.stock.productSaleBatch.ProductSaleBatch;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

@@ -1,4 +1,4 @@
-package com.domain.revenue.person.dtos;
+package com.domain.crm.person.dtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

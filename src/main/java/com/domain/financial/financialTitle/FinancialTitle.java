@@ -2,7 +2,7 @@ package com.domain.financial.financialTitle;
 
 import com.domain.financial.financialAccount.FinancialAccount;
 import com.domain.financial.financialTitle.constants.FinancialTitleStatus;
-import com.domain.revenue.person.Person;
+import com.domain.crm.person.Person;
 import com.domain.shared.BaseEntityCompany;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;

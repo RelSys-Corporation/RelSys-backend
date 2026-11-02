@@ -1,14 +1,13 @@
-package com.domain.revenue.product.batch.productBatch;
+package com.domain.stock.productBatch;
 
-import com.domain.revenue.product.suppliers.productSupplier.ProductSupplier;
-import com.domain.shared.BaseEntity;
+import com.domain.commercial.product.suppliers.productSupplier.ProductSupplier;
 import com.domain.shared.BaseEntityCompany;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "PRODUCT_BATCH", schema = "REVENUE")
+@Table(name = "PRODUCT_BATCH", schema = "STOCK")
 public class ProductBatch extends BaseEntityCompany {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_SUPPLIER_ID", nullable = false)

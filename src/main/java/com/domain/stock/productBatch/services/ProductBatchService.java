@@ -1,10 +1,10 @@
-package com.domain.revenue.product.batch.productBatch.services;
+package com.domain.stock.productBatch.services;
 
-import com.domain.revenue.product.Product;
-import com.domain.revenue.product.batch.productBatch.ProductBatch;
-import com.domain.revenue.product.suppliers.productSupplier.ProductSupplier;
-import com.domain.revenue.product.suppliers.productSupplier.services.ProductSupplierService;
-import com.domain.revenue.person.subtype.Supplier;
+import com.domain.commercial.product.Product;
+import com.domain.stock.productBatch.ProductBatch;
+import com.domain.commercial.product.suppliers.productSupplier.ProductSupplier;
+import com.domain.commercial.product.suppliers.productSupplier.services.ProductSupplierService;
+import com.domain.crm.person.subtype.Supplier;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.math.BigDecimal;

@@ -1,4 +1,4 @@
-package com.domain.revenue.sale.constant.saleStatus;
+package com.domain.commercial.sale.constant.saleStatus;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "SALE_STATUS", schema = "REVENUE")
+@Table(name = "SALE_STATUS", schema = "COMMERCIAL")
 public class SaleStatus extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

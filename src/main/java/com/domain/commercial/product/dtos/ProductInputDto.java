@@ -1,4 +1,4 @@
-package com.domain.revenue.product.dtos;
+package com.domain.commercial.product.dtos;
 
 import java.math.BigDecimal;
 

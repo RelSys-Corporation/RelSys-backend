@@ -1,14 +1,14 @@
-package com.domain.revenue.person.resources;
+package com.domain.crm.person.resources;
 
-import com.domain.revenue.person.Person;
-import com.domain.revenue.person.dtos.DigitalPersonInputDto;
-import com.domain.revenue.person.dtos.LegalPersonInputDto;
-import com.domain.revenue.person.dtos.PersonOutputDto;
-import com.domain.revenue.person.dtos.PhysicalPersonInputDto;
-import com.domain.revenue.person.mappers.PersonDtoMapper;
-import com.domain.revenue.person.services.PersonService;
-import com.domain.revenue.person.subtype.LegalPerson;
-import com.domain.revenue.person.subtype.PhysicalPerson;
+import com.domain.crm.person.Person;
+import com.domain.crm.person.dtos.DigitalPersonInputDto;
+import com.domain.crm.person.dtos.LegalPersonInputDto;
+import com.domain.crm.person.dtos.PersonOutputDto;
+import com.domain.crm.person.dtos.PhysicalPersonInputDto;
+import com.domain.crm.person.mappers.PersonDtoMapper;
+import com.domain.crm.person.services.PersonService;
+import com.domain.crm.person.subtype.LegalPerson;
+import com.domain.crm.person.subtype.PhysicalPerson;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

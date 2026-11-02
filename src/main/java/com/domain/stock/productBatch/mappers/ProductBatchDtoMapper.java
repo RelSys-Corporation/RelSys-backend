@@ -1,7 +1,7 @@
-package com.domain.revenue.product.batch.productBatch.mappers;
+package com.domain.stock.productBatch.mappers;
 
-import com.domain.revenue.product.batch.productBatch.ProductBatch;
-import com.domain.revenue.product.batch.productBatch.dtos.ProductBatchReceiveOutputDto;
+import com.domain.stock.productBatch.ProductBatch;
+import com.domain.stock.productBatch.dtos.ProductBatchReceiveOutputDto;
 
 public class ProductBatchDtoMapper {
     public static ProductBatchReceiveOutputDto toDto(ProductBatch entity) {

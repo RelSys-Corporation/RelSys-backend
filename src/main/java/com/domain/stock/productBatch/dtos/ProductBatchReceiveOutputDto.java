@@ -1,4 +1,4 @@
-package com.domain.revenue.product.batch.productBatch.dtos;
+package com.domain.stock.productBatch.dtos;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 

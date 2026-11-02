@@ -1,8 +1,8 @@
-package com.domain.revenue.sale;
+package com.domain.commercial.sale;
 
 import com.domain.financial.paymentMethod.PaymentMethod;
-import com.domain.revenue.person.subtype.Client;
-import com.domain.revenue.sale.constant.saleStatus.SaleStatus;
+import com.domain.crm.person.subtype.Client;
+import com.domain.commercial.sale.constant.saleStatus.SaleStatus;
 import com.domain.shared.BaseEntityCompany;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "SALE", schema = "REVENUE")
+@Table(name = "SALE", schema = "COMMERCIAL")
 public class Sale extends BaseEntityCompany {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CLIENT_ID")
