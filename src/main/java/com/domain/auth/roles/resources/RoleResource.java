@@ -86,4 +86,15 @@ public class RoleResource {
 
         return Response.ok(roles).build();
     }
+
+    @GET
+    @Path("/{id}")
+    @RolesAllowed("GET-ROLE_ID")
+    public Response getRoleById(@PathParam("id") Long id) {
+        Roles role = Roles.getByIdOrThrow(id);
+
+        RoleOutputDto dto = RoleDtoMapper.toDto(role);
+
+        return Response.ok(dto).build();
+    }
 }
