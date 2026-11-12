@@ -1,13 +1,15 @@
-package com.domain.stock.productBatch;
+package com.domain.commercial.productBatch;
 
 import com.domain.commercial.product.suppliers.productSupplier.ProductSupplier;
 import com.domain.shared.BaseEntityCompany;
+import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "PRODUCT_BATCH", schema = "STOCK")
+@Table(name = "PRODUCT_BATCH", schema = "COMMERCIAL")
 public class ProductBatch extends BaseEntityCompany {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_SUPPLIER_ID", nullable = false)
@@ -16,32 +18,34 @@ public class ProductBatch extends BaseEntityCompany {
     @Column(name = "PURCHASE_PRICE", scale = 15, precision = 3, nullable = false)
     public BigDecimal purchasePrice;
 
-    @Column(name = "PURCHASE_QUANTITY", scale = 15, precision = 3, nullable = false)
-    public BigDecimal purchaseQuantity;
-
-    @Column(name = "REMAINING_QUANTITY", scale = 15, precision = 3, nullable = false)
-    public BigDecimal remainingQuantity;
+    @Column(name = "EXPIRATION_DATE")
+    public LocalDateTime expirationDate;
 
     protected ProductBatch() {}
 
     private ProductBatch(
             ProductSupplier productSupplier,
             BigDecimal purchasePrice,
-            BigDecimal purchaseQuantity) {
+            LocalDateTime expirationDate) {
+        if (productSupplier == null)
+            throw new DomainException("Deve ser informado o produto fornecido pelo fornecedor.");
+
+        if (purchasePrice == null || purchasePrice.compareTo(BigDecimal.ZERO) < 0)
+            throw new DomainException("O preço de compra do lote deve ser informado e ser maior ou igual a 0.");
+
         this.productSupplier = productSupplier;
         this.purchasePrice = purchasePrice;
-        this.purchaseQuantity = purchaseQuantity;
-        this.remainingQuantity = purchaseQuantity;
+        this.expirationDate = expirationDate;
     }
 
     public static ProductBatch create(
             ProductSupplier productSupplier,
             BigDecimal purchasePrice,
-            BigDecimal purchaseQuantity) {
+            LocalDateTime expirationDate) {
         ProductBatch productBatch = new ProductBatch(
                 productSupplier,
                 purchasePrice,
-                purchaseQuantity
+                expirationDate
         );
 
         productBatch.persist();
