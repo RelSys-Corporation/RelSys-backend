@@ -3,8 +3,11 @@ package com.domain.commercial.sale.services;
 import com.domain.financial.paymentMethod.PaymentMethod;
 import com.domain.crm.person.subtype.Client;
 import com.domain.commercial.product.Product;
-import com.domain.stock.productBatch.ProductBatch;
-import com.domain.stock.productBatch.services.ProductBatchService;
+import com.domain.commercial.productBatch.ProductBatch;
+import com.domain.commercial.productBatch.services.ProductBatchService;
+import com.domain.stock.stockMovement.StockMovement;
+import com.domain.stock.stockMovement.services.StockMovementService;
+import com.domain.stock.stockMovementOrigin.StockMovementOrigin;
 import com.domain.commercial.sale.Sale;
 import com.domain.commercial.sale.constant.saleStatus.SaleStatus;
 import com.domain.commercial.sale.dtos.ProductSaleInputDto;
@@ -23,6 +26,9 @@ public class SaleService {
     @Inject
     ProductBatchService productBatchService;
 
+    @Inject
+    StockMovementService stockMovementService;
+
     public Sale createSale(
             Long clientId,
             Long paymentMethodId,
@@ -40,6 +46,8 @@ public class SaleService {
                 saleStatus
         );
 
+        StockMovementOrigin saleOrigin = StockMovementOrigin.createForSale(sale);
+
         List<ProductSale> productSales = new ArrayList<>();
 
         for (ProductSaleInputDto productSaleInputDto : products) {
@@ -51,20 +59,20 @@ public class SaleService {
                     productSaleInputDto.discountPercentage()
             );
 
-            createProductSaleBatch(productSale);
+            createProductSaleBatch(productSale, saleOrigin);
         }
 
         return sale;
     }
 
-    private List<ProductSaleBatch> createProductSaleBatch(ProductSale productSale) {
+    private List<ProductSaleBatch> createProductSaleBatch(ProductSale productSale, StockMovementOrigin saleOrigin) {
         List<ProductSaleBatch> productSaleBatches = new ArrayList<>();
 
         BigDecimal quantityToDeduct = productSale.quantity;
         List<ProductBatch> availableBatches = productBatchService.getProductBatchWithStockByProduct(productSale.product);
 
         BigDecimal totalAvailable = availableBatches.stream()
-                .map(batch -> batch.remainingQuantity)
+                .map(batch -> stockMovementService.getAvailableQuantityByBatch(batch))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         if (totalAvailable.compareTo(quantityToDeduct) < 0)
@@ -75,10 +83,19 @@ public class SaleService {
             if (quantityToDeduct.compareTo(BigDecimal.ZERO) <= 0)
                 break;
 
-            BigDecimal quantityFromThisBatch = quantityToDeduct.min(productBatch.remainingQuantity);
+            BigDecimal batchAvailableQuantity = stockMovementService.getAvailableQuantityByBatch(productBatch);
+            BigDecimal quantityFromThisBatch = quantityToDeduct.min(batchAvailableQuantity);
 
-            productBatch.remainingQuantity = productBatch.remainingQuantity.subtract(quantityFromThisBatch);
-            productBatch.persist();
+            StockMovement lastInputMovement = stockMovementService.getLastInputMovementByBatch(productBatch);
+
+            stockMovementService.createSaleOutMovement(
+                    productSale.product,
+                    productBatch,
+                    saleOrigin,
+                    lastInputMovement.warehouse,
+                    lastInputMovement.warehouseLocation,
+                    quantityFromThisBatch
+            );
 
             ProductSaleBatch productSaleBatch = ProductSaleBatch.create(
                     productSale,

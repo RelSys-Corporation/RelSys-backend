@@ -1,11 +1,11 @@
 package com.domain.commercial.product.resources;
 
 import com.domain.commercial.product.Product;
-import com.domain.stock.productBatch.ProductBatch;
-import com.domain.stock.productBatch.dtos.ProductBatchReceiveInputDto;
-import com.domain.stock.productBatch.dtos.ProductBatchReceiveOutputDto;
-import com.domain.stock.productBatch.mappers.ProductBatchDtoMapper;
-import com.domain.stock.productBatch.services.ProductBatchService;
+import com.domain.commercial.productBatch.ProductBatch;
+import com.domain.commercial.productBatch.dtos.ProductBatchReceiveInputDto;
+import com.domain.commercial.productBatch.dtos.ProductBatchReceiveOutputDto;
+import com.domain.commercial.productBatch.mappers.ProductBatchDtoMapper;
+import com.domain.commercial.productBatch.services.ProductBatchService;
 import com.domain.commercial.product.dtos.ProductInputDto;
 import com.domain.commercial.product.dtos.ProductOutputDto;
 import com.domain.commercial.product.mappers.ProductDtoMapper;
@@ -78,7 +78,10 @@ public class ProductResource {
                 dto.productId(),
                 dto.supplierId(),
                 dto.purchasePrice(),
-                dto.quantity()
+                dto.quantity(),
+                dto.warehouseId(),
+                dto.warehouseLocationId(),
+                dto.expirationDate()
         );
 
         ProductBatchReceiveOutputDto productBatchDto = ProductBatchDtoMapper.toDto(productBatch);

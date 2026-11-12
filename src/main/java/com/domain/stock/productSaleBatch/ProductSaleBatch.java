@@ -1,6 +1,6 @@
 package com.domain.stock.productSaleBatch;
 
-import com.domain.stock.productBatch.ProductBatch;
+import com.domain.commercial.productBatch.ProductBatch;
 import com.domain.commercial.sale.productSale.ProductSale;
 import com.domain.shared.BaseEntityCompany;
 import com.infrastructure.exceptions.DomainException;
