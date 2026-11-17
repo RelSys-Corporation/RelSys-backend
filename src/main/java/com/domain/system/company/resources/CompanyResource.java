@@ -5,6 +5,8 @@ import com.domain.system.company.dtos.CompanyInputDto;
 import com.domain.system.company.dtos.CompanyOutputDto;
 import com.domain.system.company.mappers.CompanyDtoMapper;
 import com.domain.system.company.services.CompanyService;
+import com.domain.system.message.Message;
+import com.infrastructure.annotations.RequiredField;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -30,7 +32,7 @@ public class CompanyResource {
     @Transactional
     @RolesAllowed("CREATE-COMPANY")
     public Response createCompany(
-            @NotNull(message = "Devem ser informado os dados para criação da empresa.")
+            @RequiredField(entity = Message.Entity.COMPANY, property = Message.Property.DATA)
             @Valid
             CompanyInputDto dto
     ) {

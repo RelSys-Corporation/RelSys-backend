@@ -4,6 +4,7 @@ import com.domain.financial.financialAccount.FinancialAccount;
 import com.domain.financial.financialTitle.constants.FinancialTitleStatus;
 import com.domain.crm.person.Person;
 import com.domain.shared.BaseEntityCompany;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 
@@ -58,22 +59,22 @@ public class FinancialTitle extends BaseEntityCompany {
             LocalDateTime fullPayDate
     ) {
         if (financialAccount == null)
-            throw new DomainException("A conta financeira precisa ser informada.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.FINANCIAL_ACCOUNT));
 
         if (financialTitleStatus == null)
-            throw new DomainException("O status do titulo preicsa ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.FINANCIAL_TITLE, Message.Property.STATUS));
 
         if (batch == null)
-            throw new DomainException("O lote precisa ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.BATCH));
 
         if (value == null || value.compareTo(BigDecimal.ZERO) <= 0)
-            throw new DomainException("O valor do titulo precisa ser maior do que 0.");
+            throw new DomainException(Message.format(Message.Type.SHOULD_HAVE, Message.Entity.FINANCIAL_TITLE, Message.Property.VALUE, "mairo que 0"));
 
         if (payedValue == null || payedValue.compareTo(BigDecimal.ZERO) < 0)
-            throw new DomainException("O valor pago não pode ser inferior a 0.");
+            throw new DomainException(Message.format(Message.Type.SHOULD_HAVE, Message.Entity.PAYMENT, Message.Property.VALUE, "maior ou igual a 0"));
 
         if (expirationDate == null)
-            throw new DomainException("A data de vencimento precisa ser informada.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.EXPIRATION_DATE));
 
         this.financialAccount = financialAccount;
         this.installment = financialTitleInstallment;

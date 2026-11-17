@@ -1,6 +1,7 @@
 package com.domain.financial.paymentMethod;
 
 import com.domain.shared.BaseEntityCompany;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
 
@@ -17,9 +18,9 @@ public class PaymentMethod extends BaseEntityCompany {
 
     public static PaymentMethod getByIdOrThrow(Long id) {
         if (id == null)
-            throw new IllegalArgumentException("O identificador do método de pagamento não foi informado.");
+            throw new IllegalArgumentException(Message.format(Message.Type.IDENTIFIER_ABSENT, Message.Entity.PAYMENT_METHOD));
 
         return PaymentMethod.<PaymentMethod>findByIdOptional(id)
-                .orElseThrow(() -> new NotFoundException("Método de pagamento (" + id + ") não encontrado."));
+                .orElseThrow(() -> new NotFoundException(Message.format(Message.Type.NOT_FOUND, Message.Entity.PAYMENT_METHOD, id)));
     }
 }

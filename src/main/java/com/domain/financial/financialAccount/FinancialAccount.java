@@ -1,6 +1,7 @@
 package com.domain.financial.financialAccount;
 
 import com.domain.shared.BaseEntityCompany;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,10 +25,10 @@ public class FinancialAccount extends BaseEntityCompany {
             String fluxAcronym
     ) {
         if (name == null || name.isBlank())
-            throw new DomainException("O nome da conta precisa ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.FINANCIAL_ACCOUNT, Message.Property.NAME));
 
         if (fluxAcronym == null || fluxAcronym.isBlank() || !List.of("R", "P").contains(fluxAcronym))
-            throw new DomainException("O indicador da conta precisa ser informado ('R', 'P').");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.FINANCIAL_ACCOUNT, Message.Property.TYPE));
 
         this.name = name;
         this.fluxAcronym = fluxAcronym;

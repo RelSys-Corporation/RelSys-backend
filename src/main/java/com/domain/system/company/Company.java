@@ -1,6 +1,7 @@
 package com.domain.system.company;
 
 import com.domain.shared.BaseEntity;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
@@ -30,7 +31,7 @@ public class Company extends BaseEntity {
             Company headquarterCompany
     ) {
         if (corporateName == null || corporateName.isBlank())
-            throw new DomainException("O nome corporativo da empresa deve ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.COMPANY, Message.Property.NAME));
 
         if (isHeadquarter)
             headquarterCompany = null;
@@ -50,10 +51,10 @@ public class Company extends BaseEntity {
 
     public static Company getByIdOrThrow(Long id) {
         if (id == null)
-            return null;
+            throw new DomainException(Message.format(Message.Type.IDENTIFIER_ABSENT, Message.Entity.COMPANY));
 
         return Company.<Company>findByIdOptional(id)
-                .orElseThrow(() -> new NotFoundException("Empresa (" + id + ") não encontrada."));
+                .orElseThrow(() -> new NotFoundException(Message.format(Message.Type.NOT_FOUND, Message.Entity.COMPANY, id)));
     }
 
     public static Company create(

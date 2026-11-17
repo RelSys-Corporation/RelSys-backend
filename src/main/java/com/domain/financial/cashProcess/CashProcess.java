@@ -2,6 +2,7 @@ package com.domain.financial.cashProcess;
 
 import com.domain.financial.paymentMethod.PaymentMethod;
 import com.domain.shared.BaseEntityCompany;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 
@@ -29,10 +30,10 @@ public class CashProcess extends BaseEntityCompany {
             LocalDateTime processDate
     ) {
         if (paymentMethod == null)
-            throw new DomainException("O método de pagamente precisa ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.PAYMENT_METHOD));
 
         if (totalValue == null || totalValue.compareTo(BigDecimal.ZERO) <= 0)
-            throw new DomainException("O valor do total do processo de caixa precisa ser superiro a 0.");
+            throw new DomainException(Message.format(Message.Type.SHOULD_HAVE, Message.Entity.CASH_PROCESS, Message.Property.VALUE, "maior que 0"));
 
         this.paymentMethod = paymentMethod;
         this.totalValue = totalValue;

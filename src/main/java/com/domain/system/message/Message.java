@@ -53,12 +53,23 @@ public final class Message extends BaseEntity {
         WAREHOUSE,
         WAREHOUSE_LOCATION,
         SALE,
-        SALE_STATUS,
         PAYMENT_METHOD,
         PERSON,
-        PERSON_STATUS,
         CPF,
-        CNPJ;
+        CNPJ,
+        FLUX,
+        CASH_PROCESS,
+        FINANCIAL_TITLE,
+        FINANCIAL_ACCOUNT,
+        CASH_MOVEMENT,
+        PAYMENT,
+        DISCOUNT,
+        INTEREST,
+        BATCH,
+        EXPIRATION_DATE,
+        FINANCIAL_BATCH,
+        BARCODE,
+        STOCK_MOVEMENT;
 
         Entity(){}
 
@@ -71,7 +82,11 @@ public final class Message extends BaseEntity {
         NONE,
         NAME,
         PRICE,
+        VALUE,
         AMOUNT,
+        DIRECTION,
+        TYPE,
+        STATUS,
         DATA;
 
         MessageProperty getProperty() {

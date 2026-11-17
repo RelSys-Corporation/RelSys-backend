@@ -44,6 +44,6 @@ public class SaleStatus extends PanacheEntityBase {
 
     public static SaleStatus of(Type status) {
         return SaleStatus.<SaleStatus>findByIdOptional(status.id)
-                .orElseThrow(() -> new IllegalStateException(Message.format(Message.Type.NOT_FOUND, Message.Entity.SALE_STATUS, status.description)));
+                .orElseThrow(() -> new IllegalStateException(Message.format(Message.Type.NOT_FOUND, Message.Entity.SALE, Message.Property.STATUS, status.description)));
     }
 }

@@ -7,6 +7,7 @@ import com.domain.stock.stockMovement.StockMovement;
 import com.domain.stock.stockMovementOrigin.StockMovementOrigin;
 import com.domain.stock.warehouse.Warehouse;
 import com.domain.stock.warehouseLocation.WarehouseLocation;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -28,17 +29,10 @@ public class StockMovementService {
             WarehouseLocation warehouseLocation,
             BigDecimal quantity) {
         if (productBatch == null || product == null)
-            throw new DomainException("O lote e o produto devem ser informados para o recebimento.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.BATCH));
 
         if (!productBatch.productSupplier.product.id.equals(product.id))
-            throw new DomainException(
-                    String.format(
-                            "O lote (%d) pertence ao produto %s e não ao produto (%d) informado.",
-                            productBatch.id,
-                            productBatch.productSupplier.product.name,
-                            product.id
-                    )
-            );
+            throw new DomainException(Message.format(Message.Type.NOT_FOUND, Message.Entity.BATCH, productBatch.id));
 
         MovementType movementType = MovementType.getByName(MOVEMENT_PURCHASE_RECEIPT);
         StockMovementOrigin origin = StockMovementOrigin.createForProductBatch(productBatch);
@@ -76,7 +70,7 @@ public class StockMovementService {
 
     public BigDecimal getAvailableQuantityByBatch(ProductBatch productBatch) {
         if (productBatch == null)
-            throw new DomainException("O lote deve ser informado para consultar o estoque disponível.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.BATCH));
 
         List<StockMovement> movements = StockMovement.list("productBatch.id = ?1", productBatch.id);
 
@@ -95,7 +89,7 @@ public class StockMovementService {
 
     public BigDecimal getAvailableQuantityByProduct(Product product) {
         if (product == null)
-            throw new DomainException("O produto deve ser informado para consultar o estoque disponível.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.PRODUCT));
 
         List<ProductBatch> batches = ProductBatch.list("productSupplier.product.id = ?1", product.id);
 
@@ -106,7 +100,7 @@ public class StockMovementService {
 
     public StockMovement getLastInputMovementByBatch(ProductBatch productBatch) {
         if (productBatch == null)
-            throw new DomainException("O lote deve ser informado para consultar o último movimento de entrada.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.BATCH));
 
         return StockMovement.<StockMovement>find(
                         "productBatch.id = ?1 and movementType.fluxAcronym = ?2 order by movementDate desc, id desc",
@@ -114,8 +108,6 @@ public class StockMovementService {
                         FLUX_INPUT
                 )
                 .firstResultOptional()
-                .orElseThrow(() -> new DomainException(
-                        String.format("O lote (%d) não possui movimento de entrada registrado.", productBatch.id)
-                ));
+                .orElseThrow(() -> new DomainException(Message.format(Message.Type.NOT_FOUND, Message.Entity.STOCK_MOVEMENT, productBatch.id)));
     }
 }

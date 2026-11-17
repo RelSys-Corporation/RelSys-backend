@@ -33,6 +33,6 @@ public class PersonStatus extends BaseEntity {
 
     public static PersonStatus of(Type status) {
         return PersonStatus.<PersonStatus>findByIdOptional(status.getId())
-                .orElseThrow(() -> new IllegalStateException(Message.format(Message.Type.NOT_FOUND, Message.Entity.PERSON_STATUS, status.description)));
+                .orElseThrow(() -> new IllegalStateException(Message.format(Message.Type.NOT_FOUND, Message.Entity.PERSON, Message.Property.STATUS, status.description)));
     }
 }
