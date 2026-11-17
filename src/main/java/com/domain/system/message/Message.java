@@ -34,6 +34,10 @@ public final class Message extends BaseEntity {
         Type(boolean noArticle) {
             this.noArticle = noArticle;
         }
+
+        Message getMessage() {
+            return Message.getByNameOrThrow(this.toString());
+        }
     }
 
     public enum Entity {
@@ -43,7 +47,18 @@ public final class Message extends BaseEntity {
         USER,
         FIRST_USER,
         COMPANY,
-        PRODUCT;
+        PRODUCT,
+        PRODUCT_SUPPLIER,
+        PRODUCT_BATCH,
+        WAREHOUSE,
+        WAREHOUSE_LOCATION,
+        SALE,
+        SALE_STATUS,
+        PAYMENT_METHOD,
+        PERSON,
+        PERSON_STATUS,
+        CPF,
+        CNPJ;
 
         Entity(){}
 
@@ -52,12 +67,54 @@ public final class Message extends BaseEntity {
         }
     }
 
-    public static String format(Type type, Entity entityIdentifier, Object... args) {
-        Message message = Message.getByNameOrThrow(type.toString());
+    public enum Property {
+        NONE,
+        NAME,
+        PRICE,
+        AMOUNT,
+        DATA;
+
+        MessageProperty getProperty() {
+            return MessageProperty.getByNameOrThrow(this.toString());
+        }
+    }
+
+    private static String baseMessageResolver(
+            MessageEntity entity,
+            MessageProperty property,
+            boolean noArticle
+    ) {
+        String baseMessage;
+
+        if (property == null) {
+            if (noArticle) baseMessage = entity.label;
+            else baseMessage = String.format("%s %s", entity.article, entity.label);
+        } else {
+            baseMessage = String.format(
+                    "%s %s %s%s %s",
+                    property.article,
+                    property.label,
+                    property.suffix,
+                    entity.article,
+                    entity.label);
+        }
+
+        return baseMessage;
+    }
+
+    public static String format(
+            Type type,
+            Message.Entity entityIdentifier,
+            Message.Property propertyIdentifier,
+            Object... args
+    ) {
+        Message message = type.getMessage();
         MessageEntity entity = entityIdentifier.getEntity();
+        MessageProperty property = (propertyIdentifier == null || propertyIdentifier == Property.NONE) ? null : propertyIdentifier.getProperty();
 
         Object[] allArgs = new Object[args.length + 1];
-        allArgs[0] = type.noArticle ? entity.label : String.format("%s %s", entity.article, entity.label);
+
+        allArgs[0] = baseMessageResolver(entity, property, type.noArticle);
 
         System.arraycopy(args, 0, allArgs, 1, args.length);
         String formatedMessage = MessageFormat.format(message.content.replace("'", "''"), allArgs);
@@ -65,7 +122,15 @@ public final class Message extends BaseEntity {
         return formatedMessage.substring(0, 1).toUpperCase() + formatedMessage.substring(1);
     }
 
-    private static Message getByNameOrThrow(String name) {
+    public static String format(
+            Type type,
+            Message.Entity entityIdentifier,
+            Object... args
+    ) {
+        return format(type, entityIdentifier, null, args);
+    }
+
+        private static Message getByNameOrThrow(String name) {
         return Message.<Message>find("name = ?1", name)
                 .firstResultOptional()
                 .orElseThrow(() -> new IllegalStateException("This message does not exists."));

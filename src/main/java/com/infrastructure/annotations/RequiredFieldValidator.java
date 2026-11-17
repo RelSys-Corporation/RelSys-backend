@@ -1,6 +1,7 @@
 package com.infrastructure.annotations;
 
 import com.domain.system.message.Message;
+import com.domain.system.message.MessageEntity;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -11,10 +12,12 @@ import static com.fasterxml.jackson.databind.type.LogicalType.Map;
 
 public class RequiredFieldValidator implements ConstraintValidator<RequiredField, Object> {
     private Message.Entity entity;
+    private Message.Property property;
 
     @Override
     public void initialize(RequiredField constraintAnnotation) {
-        this.entity = constraintAnnotation.value();
+        this.entity = constraintAnnotation.entity();
+        this.property = constraintAnnotation.property();
     }
 
     @Override
@@ -31,7 +34,7 @@ public class RequiredFieldValidator implements ConstraintValidator<RequiredField
         if (isEmpty) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(
-                    Message.format(Message.Type.REQUIRED_ARGUMENT, this.entity)
+                    Message.format(Message.Type.REQUIRED_ARGUMENT, this.entity, this.property)
             ).addConstraintViolation();
             return false;
         }
