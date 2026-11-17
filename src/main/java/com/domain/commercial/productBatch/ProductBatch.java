@@ -2,6 +2,7 @@ package com.domain.commercial.productBatch;
 
 import com.domain.commercial.product.suppliers.productSupplier.ProductSupplier;
 import com.domain.shared.BaseEntityCompany;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 
@@ -28,10 +29,10 @@ public class ProductBatch extends BaseEntityCompany {
             BigDecimal purchasePrice,
             LocalDateTime expirationDate) {
         if (productSupplier == null)
-            throw new DomainException("Deve ser informado o produto fornecido pelo fornecedor.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.PRODUCT_SUPPLIER));
 
         if (purchasePrice == null || purchasePrice.compareTo(BigDecimal.ZERO) < 0)
-            throw new DomainException("O preço de compra do lote deve ser informado e ser maior ou igual a 0.");
+            throw new DomainException(Message.format(Message.Type.SHOULD_HAVE, Message.Entity.PRODUCT_BATCH, Message.Property.PRICE, "maior ou igual a 0"));
 
         this.productSupplier = productSupplier;
         this.purchasePrice = purchasePrice;

@@ -9,6 +9,8 @@ import com.domain.crm.person.mappers.PersonDtoMapper;
 import com.domain.crm.person.services.PersonService;
 import com.domain.crm.person.subtype.LegalPerson;
 import com.domain.crm.person.subtype.PhysicalPerson;
+import com.domain.system.message.Message;
+import com.infrastructure.annotations.RequiredField;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -32,7 +34,7 @@ public class PersonResource {
     @Path("/digital")
     @RolesAllowed("CREATE-PERSON")
     public Response createDigitalPerson(
-            @NotNull(message = "Deve ser informado os dados de cadastro.")
+            @RequiredField(entity = Message.Entity.PERSON, property = Message.Property.DATA)
             @Valid
             DigitalPersonInputDto dto
     ) {
@@ -55,7 +57,7 @@ public class PersonResource {
     @Path("/legal")
     @RolesAllowed("CREATE-PERSON")
     public Response createLegalPerson(
-            @NotNull(message = "Deve ser informado os dados de cadastro.")
+            @RequiredField(entity = Message.Entity.PERSON, property = Message.Property.DATA)
             @Valid
             LegalPersonInputDto dto
     ) {
@@ -79,7 +81,7 @@ public class PersonResource {
     @Path("/physical")
     @RolesAllowed("CREATE-PERSON")
     public Response createPhysicalPerson(
-            @NotNull(message = "Deve ser informado os dados de cadastro.")
+            @RequiredField(entity = Message.Entity.PERSON, property = Message.Property.DATA)
             @Valid
             PhysicalPersonInputDto dto
     ) {

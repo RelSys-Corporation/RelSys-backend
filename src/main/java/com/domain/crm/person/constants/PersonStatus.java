@@ -1,6 +1,7 @@
 package com.domain.crm.person.constants;
 
 import com.domain.shared.BaseEntity;
+import com.domain.system.message.Message;
 import jakarta.persistence.*;
 
 @Entity
@@ -32,12 +33,6 @@ public class PersonStatus extends BaseEntity {
 
     public static PersonStatus of(Type status) {
         return PersonStatus.<PersonStatus>findByIdOptional(status.getId())
-                .orElseThrow(() -> new IllegalStateException(
-                        String.format(
-                                "Status '%s' (%d) não encontrado na tabela PERSON_STATUS.",
-                                status.getDescription(),
-                                status.getId()
-                        )
-                ));
+                .orElseThrow(() -> new IllegalStateException(Message.format(Message.Type.NOT_FOUND, Message.Entity.PERSON_STATUS, status.description)));
     }
 }

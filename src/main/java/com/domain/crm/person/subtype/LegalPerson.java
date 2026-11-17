@@ -4,6 +4,7 @@ import com.domain.crm.person.Person;
 import com.domain.shared.BaseEntityCompany;
 import com.domain.shared.valueObjects.cnpj.CNPJ;
 import com.domain.shared.valueObjects.cnpj.CnpjAttributeConverter;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 
@@ -28,10 +29,10 @@ public class LegalPerson extends BaseEntityCompany {
             CNPJ cnpj
     ) {
         if (person == null)
-            throw new DomainException("A pessoa base deve ser informada.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.PERSON));
 
         if (cnpj == null)
-            throw new DomainException("O CNPJ deve ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.CNPJ));
 
         this.person = person;
         this.cnpj = cnpj;

@@ -4,6 +4,7 @@ import com.domain.commercial.product.Product;
 import com.domain.commercial.product.suppliers.productSupplier.ProductSupplier;
 import com.domain.crm.person.subtype.Supplier;
 import com.domain.shared.valueObjects.barcode.Barcode;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -61,14 +62,6 @@ public class ProductSupplierService {
                         product,
                         supplier
                 ).firstResultOptional()
-                .orElseThrow(() -> new NotFoundException(
-                        String.format(
-                                "Produto %s (%d) para o fornecedor %s (%d) não encontrado.",
-                                product.name,
-                                product.id,
-                                supplier.person.name,
-                                supplier.id
-                        )
-                ));
+                .orElseThrow(() -> new NotFoundException(Message.format(Message.Type.NOT_FOUND, Message.Entity.PRODUCT)));
     }
 }

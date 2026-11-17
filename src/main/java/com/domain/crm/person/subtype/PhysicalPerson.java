@@ -4,6 +4,7 @@ import com.domain.crm.person.Person;
 import com.domain.shared.BaseEntityCompany;
 import com.domain.shared.valueObjects.cpf.CPF;
 import com.domain.shared.valueObjects.cpf.CpfAttributeConverter;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 
@@ -28,10 +29,10 @@ public class PhysicalPerson extends BaseEntityCompany {
             CPF cpf
     ) {
         if (person == null)
-            throw new DomainException("A pessoa base deve ser informada.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.PERSON));
 
         if (cpf == null)
-            throw new DomainException("O CPF deve ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.CPF));
 
         this.person = person;
         this.cpf = cpf;

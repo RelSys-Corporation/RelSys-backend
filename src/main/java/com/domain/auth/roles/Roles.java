@@ -1,6 +1,9 @@
 package com.domain.auth.roles;
 
 import com.domain.shared.BaseEntity;
+import com.domain.system.message.Message;
+import com.domain.system.message.MessageEntity;
+import com.domain.system.message.MessageProperty;
 import com.infrastructure.exceptions.DomainException;
 import com.infrastructure.exceptions.NotFoundException;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
@@ -20,7 +23,7 @@ public class Roles extends BaseEntity {
             String name
     ) {
         if (name == null || name.isBlank())
-            throw new DomainException("O nome do cargo deve ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.ROLE, Message.Property.NAME));
 
         this.name = name;
     }

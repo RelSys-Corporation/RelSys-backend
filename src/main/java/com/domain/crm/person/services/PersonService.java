@@ -19,6 +19,7 @@ public class PersonService {
                 "D"
         );
 
+        // TODO Change to Database message
         if (person.id == null)
             throw new IllegalStateException("Não foi possível criar a pessoa digital.");
 
@@ -42,6 +43,7 @@ public class PersonService {
                 new CNPJ(cnpj)
         );
 
+        // TODO Change to Database message
         if (legalPerson.id == null)
             throw new IllegalStateException("Não foi possível criar a pessoa juridica.");
 
@@ -64,6 +66,7 @@ public class PersonService {
                 new CPF(cpf)
         );
 
+        // TODO Change to Database message
         if (physicalPerson.id == null)
             throw new IllegalStateException("Não foi possível criar a pessoa fisica.");
 

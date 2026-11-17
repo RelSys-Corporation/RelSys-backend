@@ -1,5 +1,7 @@
 package com.domain.commercial.sale.dtos;
 
+import com.domain.system.message.Message;
+import com.infrastructure.annotations.RequiredField;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -9,11 +11,10 @@ import java.util.List;
 
 public record SaleInputDto(
         Long clientId,
-        @NotNull(message = "O método de pagamento deve ser informado.")
+        @RequiredField(entity = Message.Entity.PAYMENT_METHOD)
         Long paymentMethodId,
         BigDecimal discountPercentage,
-        @NotNull(message = "Deve ser informado os produtos da venda.")
-        @NotEmpty(message = "Deve ser informado os produtos da venda.")
+        @RequiredField(entity = Message.Entity.PRODUCT)
         List<@Valid ProductSaleInputDto> products
 ) {
 }

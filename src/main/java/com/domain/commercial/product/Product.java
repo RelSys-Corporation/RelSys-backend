@@ -3,6 +3,7 @@ package com.domain.commercial.product;
 import com.domain.shared.BaseEntityCompany;
 import com.domain.shared.valueObjects.barcode.Barcode;
 import com.domain.shared.valueObjects.barcode.BarcodeAttributeConverter;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
@@ -35,10 +36,11 @@ public class Product extends BaseEntityCompany {
             Barcode barcode
     ) {
         if (name == null || name.isBlank())
-            throw new DomainException("O nome do produto não pode ser nulo.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.PRODUCT, Message.Property.NAME));
 
+        // TODO - Review to put the message in Database
         if (price.compareTo(BigDecimal.ZERO) < 0)
-            throw new DomainException("O preço do produto deve ser maior ou igual a 0.");
+            throw new DomainException(Message.format(Message.Type.SHOULD_HAVE, Message.Entity.PRODUCT, Message.Property.PRICE, "maior ou igual a 0."));
 
         this.name = name;
         this.price = price;
@@ -63,23 +65,19 @@ public class Product extends BaseEntityCompany {
 
     public static Product getProductByBarcode(Barcode barcode) {
         if (barcode == null || barcode.toString().isBlank())
-            throw new DomainException("O identificador do produto precisa ser informado.");
+            throw new DomainException(Message.format(Message.Type.IDENTIFIER_ABSENT, Message.Entity.PRODUCT));
 
         return Product.<Product>find("barcode", barcode)
                 .firstResultOptional()
-                .orElseThrow(() -> new NotFoundException(
-                        String.format("Nenhum produto encontrado com o código de barras: %s",
-                                barcode
-                        )
-                ));
+                .orElseThrow(() -> new NotFoundException(Message.format(Message.Type.NOT_FOUND, Message.Entity.PRODUCT, barcode)));
     }
 
     public static Product getByIdOrThrow(Long id) {
         if (id == null)
-            throw new DomainException("O identificador do produto precisa ser informado.");
+            throw new DomainException(Message.format(Message.Type.IDENTIFIER_ABSENT, Message.Entity.PRODUCT));
 
         return Product.<Product>findByIdOptional(id)
-                .orElseThrow(() -> new NotFoundException("Produto (" + id + ") informado não existe."));
+                .orElseThrow(() -> new NotFoundException(Message.format(Message.Type.NOT_FOUND, Message.Entity.PRODUCT, id)));
     }
 
 }

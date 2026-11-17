@@ -8,6 +8,7 @@ import com.domain.commercial.productBatch.ProductBatch;
 import com.domain.stock.stockMovement.services.StockMovementService;
 import com.domain.stock.warehouse.Warehouse;
 import com.domain.stock.warehouseLocation.WarehouseLocation;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -39,7 +40,7 @@ public class ProductBatchService {
         WarehouseLocation warehouseLocation = WarehouseLocation.getByIdOrThrow(warehouseLocationId);
 
         if (!warehouseLocation.warehouse.id.equals(warehouse.id))
-            throw new DomainException("A localização informada não pertence ao armazém informado.");
+            throw new DomainException(Message.format(Message.Type.NOT_FOUND, Message.Entity.WAREHOUSE_LOCATION, warehouseLocationId));
 
         ProductBatch productBatch = ProductBatch.create(
                 productSupplier,

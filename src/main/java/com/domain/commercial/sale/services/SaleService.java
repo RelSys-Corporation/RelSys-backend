@@ -76,6 +76,7 @@ public class SaleService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         if (totalAvailable.compareTo(quantityToDeduct) < 0)
+            // TODO Change to Database message
             throw new DomainException("Estoque insuficiente para o produto: " + productSale.product.name +
                     ". Necessário: " + quantityToDeduct + ", Disponivel: " + totalAvailable);
 
