@@ -9,6 +9,8 @@ import com.domain.auth.rolesPermissions.dtos.PermissionsInputDto;
 import com.domain.auth.rolesPermissions.dtos.RolesPermissionsOutputDto;
 import com.domain.auth.rolesPermissions.mappers.RolesPermissionsDtoMapper;
 import com.domain.auth.rolesPermissions.services.RolesPermissionsService;
+import com.domain.system.message.Message;
+import com.infrastructure.annotations.RequiredField;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -32,11 +34,7 @@ public class RoleResource {
     @POST
     @Transactional
     @RolesAllowed("CREATE-ROLE")
-    public Response createRole(
-            @NotNull(message = "Deve ser informado os dados da função.")
-            @Valid
-            RoleInputDto dto
-    ) {
+    public Response createRole(@Valid RoleInputDto dto) {
         Roles role = Roles.create(dto.name());
 
         RoleOutputDto roleOutputDto = RoleDtoMapper.toDto(role);
@@ -54,10 +52,9 @@ public class RoleResource {
     @RolesAllowed("GIVE-PERMISSION")
     public Response givePermissionsToRole(
             @PathParam("id")
-            @NotNull(message = "Deve ser informada a role.")
+            @RequiredField(entity = Message.Entity.ROLE)
             Long roleId,
-            @NotNull(message = "Deve ser informado as permissões.")
-            @NotEmpty(message = "A permissão deve ser enviada.")
+            @RequiredField(entity = Message.Entity.PERMISSION)
             List<@Valid PermissionsInputDto> permissionsDto
     ) {
         List<RolesPermissions> rolesPermissions = rolesPermissionsService.givePermissionsToRole(

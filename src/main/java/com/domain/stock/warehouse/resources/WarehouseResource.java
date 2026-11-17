@@ -8,6 +8,8 @@ import com.domain.stock.warehouseLocation.WarehouseLocation;
 import com.domain.stock.warehouseLocation.dtos.WarehouseLocationInputDto;
 import com.domain.stock.warehouseLocation.dtos.WarehouseLocationOutputDto;
 import com.domain.stock.warehouseLocation.mappers.WarehouseLocationDtoMapper;
+import com.domain.system.message.Message;
+import com.infrastructure.annotations.RequiredField;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -28,7 +30,7 @@ public class WarehouseResource {
     @Transactional
     @RolesAllowed("CREATE-WAREHOUSE")
     public Response createWarehouse(
-            @NotNull(message = "Deve ser informado os dados do armazém.")
+            @RequiredField(entity = Message.Entity.WAREHOUSE, property = Message.Property.DATA)
             @Valid
             WarehouseInputDto dto
     ) {
@@ -60,9 +62,9 @@ public class WarehouseResource {
     @RolesAllowed("CREATE-WAREHOUSE_LOCATION")
     public Response createWarehouseLocation(
             @PathParam("warehouseId")
-            @NotNull(message = "Deve ser informado o armazém da localização.")
+            @RequiredField(entity = Message.Entity.WAREHOUSE)
             Long warehouseId,
-            @NotNull(message = "Deve ser informado os dados da localização.")
+            @RequiredField(entity = Message.Entity.WAREHOUSE_LOCATION, property = Message.Property.DATA)
             @Valid
             WarehouseLocationInputDto dto
     ) {
@@ -91,7 +93,7 @@ public class WarehouseResource {
     @RolesAllowed("GET-ALL_WAREHOUSE_LOCATION")
     public Response getAllWarehouseLocations(
             @PathParam("warehouseId")
-            @NotNull(message = "Deve ser informado o armazém das localizações.")
+            @RequiredField(entity = Message.Entity.WAREHOUSE)
             Long warehouseId
     ) {
         Warehouse.getByIdOrThrow(warehouseId);

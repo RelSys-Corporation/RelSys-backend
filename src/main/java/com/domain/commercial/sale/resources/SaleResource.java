@@ -5,6 +5,8 @@ import com.domain.commercial.sale.dtos.SaleInputDto;
 import com.domain.commercial.sale.dtos.SaleOutputDto;
 import com.domain.commercial.sale.mappers.SaleDtoMapper;
 import com.domain.commercial.sale.services.SaleService;
+import com.domain.system.message.Message;
+import com.infrastructure.annotations.RequiredField;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -30,7 +32,7 @@ public class SaleResource {
     @Transactional
     @RolesAllowed("CREATE-SALE")
     public Response createSale(
-            @NotNull(message = "Deve ser informado o conteudo da venda.")
+            @RequiredField(entity = Message.Entity.SALE, property = Message.Property.DATA)
             @Valid
             SaleInputDto dto
     ) {

@@ -2,6 +2,7 @@ package com.domain.financial.financialTitle;
 
 import com.domain.commercial.sale.Sale;
 import com.domain.shared.BaseEntityCompany;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 
@@ -23,7 +24,7 @@ public class FinancialTitleOrigin extends BaseEntityCompany {
             Sale sale
     ) {
         if (financialTitleBatch == null)
-            throw new DomainException("O lote do titulo financeiro precisa ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.FINANCIAL_BATCH));
 
         this.financialTitleBatch = financialTitleBatch;
         this.sale = sale;

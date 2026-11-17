@@ -2,6 +2,7 @@ package com.domain.financial.cashProcess;
 
 import com.domain.financial.financialTitle.FinancialTitle;
 import com.domain.shared.BaseEntityCompany;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 
@@ -41,22 +42,22 @@ public class CashProcessItem extends BaseEntityCompany {
             BigDecimal interestValue
     ) {
         if (cashProcess == null)
-            throw new DomainException("O processo de caixa precisa ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.CASH_PROCESS));
 
         if (financialTitle == null)
-            throw new DomainException("O titulo financeiro precisa ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.FINANCIAL_TITLE));
 
         if (paidValue == null || paidValue.compareTo(BigDecimal.ZERO) <= 0)
-            throw new DomainException("O valor pago precisa ser superior a 0.");
+            throw new DomainException(Message.format(Message.Type.SHOULD_HAVE, Message.Entity.PAYMENT, Message.Property.VALUE, "maior que 0"));
 
         if (discountValue == null || discountValue.compareTo(BigDecimal.ZERO) < 0)
-            throw new DomainException("O valor de desconto precisa ser igual ou superior a 0.");
+            throw new DomainException(Message.format(Message.Type.SHOULD_HAVE, Message.Entity.DISCOUNT, Message.Property.VALUE, "maior ou igual a 0"));
 
         if (interestValue == null || interestValue.compareTo(BigDecimal.ZERO) < 0)
-            throw new DomainException("O valor de juros precisa ser igual ou superior a 0.");
+            throw new DomainException(Message.format(Message.Type.SHOULD_HAVE, Message.Entity.INTEREST, Message.Property.VALUE, "maior ou igual a 0"));
 
         if (paidValue.add(interestValue).compareTo(discountValue) < 0)
-            throw new DomainException("O valor do desconto é maior que o valor pago.");
+            throw new DomainException(Message.format(Message.Type.SHOULD_HAVE, Message.Entity.DISCOUNT, Message.Property.VALUE, "menor ou igual o valor pago"));
 
         this.cashProcess = cashProcess;
         this.financialTitle = financialTitle;

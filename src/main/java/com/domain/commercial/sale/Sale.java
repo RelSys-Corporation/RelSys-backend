@@ -4,6 +4,7 @@ import com.domain.financial.paymentMethod.PaymentMethod;
 import com.domain.crm.person.subtype.Client;
 import com.domain.commercial.sale.constant.saleStatus.SaleStatus;
 import com.domain.shared.BaseEntityCompany;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 
@@ -36,10 +37,10 @@ public class Sale extends BaseEntityCompany {
             SaleStatus saleStatus
     ) {
         if (paymentMethod == null)
-            throw new DomainException("O método de pagamento deve ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.PAYMENT_METHOD));
 
         if (saleStatus == null)
-            throw new DomainException("O status da venda deve ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.SALE_STATUS));
 
         this.client = client;
         this.paymentMethod = paymentMethod;

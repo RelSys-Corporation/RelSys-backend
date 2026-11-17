@@ -1,6 +1,7 @@
 package com.domain.stock.warehouse;
 
 import com.domain.shared.BaseEntityCompany;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import com.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.*;
@@ -15,7 +16,7 @@ public class Warehouse extends BaseEntityCompany {
 
     private Warehouse(String name) {
         if (name == null || name.isBlank())
-            throw new DomainException("O nome do armazém deve ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.WAREHOUSE, Message.Property.NAME));
 
         this.name = name;
     }
@@ -29,9 +30,9 @@ public class Warehouse extends BaseEntityCompany {
 
     public static Warehouse getByIdOrThrow(Long id) {
         if (id == null)
-            throw new DomainException("O identificador do armazém deve ser informado.");
+            throw new DomainException(Message.format(Message.Type.IDENTIFIER_ABSENT, Message.Entity.WAREHOUSE));
 
         return Warehouse.<Warehouse>findByIdOptional(id)
-                .orElseThrow(() -> new NotFoundException("Armazém (" + id + ") informado não encontrado."));
+                .orElseThrow(() -> new NotFoundException(Message.format(Message.Type.NOT_FOUND, Message.Entity.WAREHOUSE, id)));
     }
 }

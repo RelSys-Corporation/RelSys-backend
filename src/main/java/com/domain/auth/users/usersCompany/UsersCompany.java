@@ -3,6 +3,8 @@ package com.domain.auth.users.usersCompany;
 import com.domain.auth.users.Users;
 import com.domain.shared.BaseEntity;
 import com.domain.system.company.Company;
+import com.domain.system.message.Message;
+import com.infrastructure.annotations.RequiredField;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 
@@ -24,10 +26,10 @@ public class UsersCompany extends BaseEntity {
             Company company
     ) {
         if (user == null)
-            throw new DomainException("O usuário precissa ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.USER));
 
         if (company == null)
-            throw new DomainException("A empresa precissa ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.COMPANY));
 
         this.user = user;
         this.company = company;

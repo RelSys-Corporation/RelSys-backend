@@ -3,6 +3,7 @@ package com.domain.auth.rolesPermissions;
 import com.domain.auth.permissions.Permissions;
 import com.domain.auth.roles.Roles;
 import com.domain.shared.BaseEntity;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 
@@ -27,10 +28,10 @@ public class RolesPermissions extends BaseEntity {
             Permissions permission
     ) {
         if (role == null)
-            throw new DomainException("O cargo deve ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.ROLE));
 
         if (permission == null)
-            throw new DomainException("A permissão deve ser informada.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.PERMISSION));
 
         this.role = role;
         this.permission = permission;
@@ -51,7 +52,7 @@ public class RolesPermissions extends BaseEntity {
 
     public static List<Permissions> getPermissionByRole(Roles role) {
         if (role == null)
-            throw new DomainException("O cargo deve ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.ROLE));
 
         return Permissions.<Permissions>find(
                         """

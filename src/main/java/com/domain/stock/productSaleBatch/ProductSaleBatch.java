@@ -3,6 +3,7 @@ package com.domain.stock.productSaleBatch;
 import com.domain.commercial.productBatch.ProductBatch;
 import com.domain.commercial.sale.productSale.ProductSale;
 import com.domain.shared.BaseEntityCompany;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 
@@ -36,13 +37,13 @@ public class ProductSaleBatch extends BaseEntityCompany {
             BigDecimal quantity
     ) {
         if (productSale == null)
-            throw new DomainException("Deve ser informado o produto da venda para retirada do lote.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.PRODUCT));
 
         if (productBatch == null)
-            throw new DomainException("Deve ser informado o lote vinculado ao produto.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.BATCH));
 
         if (quantity == null || quantity.compareTo(BigDecimal.ZERO) <= 0)
-            throw new DomainException("A quantidade de retirada do lote deve ser informada e ser superior a 0.");
+            throw new DomainException(Message.format(Message.Type.SHOULD_HAVE, Message.Entity.PRODUCT, Message.Property.AMOUNT, "maior que 0"));
 
         this.productSale = productSale;
         this.productBatch = productBatch;

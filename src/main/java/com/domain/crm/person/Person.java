@@ -1,6 +1,7 @@
 package com.domain.crm.person;
 
 import com.domain.shared.BaseEntityCompany;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -29,12 +30,10 @@ public class Person extends BaseEntityCompany {
             String personTypeAcronym
     ) {
         if (name == null || name.isBlank())
-            throw new DomainException("O nome deve ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.PERSON, Message.Property.NAME));
 
-        if (personTypeAcronym == null || personTypeAcronym.isBlank()) {
-            throw new DomainException("Deve ser informado o tipo da pessoa.");
-        } else if (!List.of("L", "P", "D").contains(personTypeAcronym)) {
-            throw new DomainException("Tipo de pessoa inválido.");
+        if (personTypeAcronym == null || personTypeAcronym.isBlank() || !List.of("L", "P", "D").contains(personTypeAcronym)) {
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.PERSON));
         }
 
         this.name = name;

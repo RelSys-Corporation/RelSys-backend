@@ -3,6 +3,7 @@ package com.domain.commercial.sale.productSale;
 import com.domain.commercial.product.Product;
 import com.domain.commercial.sale.Sale;
 import com.domain.shared.BaseEntityCompany;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 
@@ -40,13 +41,13 @@ public class ProductSale extends BaseEntityCompany {
             BigDecimal discountPercentage
     ) {
         if (sale == null)
-            throw new DomainException("Deve ser informada uma venda pra o produto da venda.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.SALE));
 
         if (product == null)
-            throw new DomainException("Deve ser informado o produto da venda.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.PRODUCT));
 
         if (quantity == null || quantity.compareTo(BigDecimal.ZERO) <= 0)
-            throw new DomainException("A quantidade da venda deve ser informada e ser superior a 0.");
+            throw new DomainException(Message.format(Message.Type.SHOULD_HAVE, Message.Entity.PRODUCT, Message.Property.AMOUNT, "maior que 0"));
 
         this.sale = sale;
         this.product = product;

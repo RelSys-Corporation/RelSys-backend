@@ -7,6 +7,7 @@ import com.domain.commercial.productBatch.ProductBatch;
 import com.domain.stock.stockMovementOrigin.StockMovementOrigin;
 import com.domain.stock.warehouse.Warehouse;
 import com.domain.stock.warehouseLocation.WarehouseLocation;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 
@@ -57,22 +58,22 @@ public class StockMovement extends BaseEntityCompany {
             ProductBatch productBatch,
             BigDecimal quantity) {
         if (movementType == null)
-            throw new DomainException("O tipo do movimento de estoque deve ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.STOCK_MOVEMENT, Message.Property.TYPE));
 
         if (product == null)
-            throw new DomainException("O produto do movimento de estoque deve ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.PRODUCT));
 
         if (warehouse == null)
-            throw new DomainException("O armazém do movimento de estoque deve ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.WAREHOUSE));
 
         if (warehouseLocation == null)
-            throw new DomainException("A localização do movimento de estoque deve ser informada.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.WAREHOUSE_LOCATION));
 
         if (stockMovementOrigin == null)
             throw new DomainException("A origem do movimento de estoque deve ser informada.");
 
         if (quantity == null || quantity.compareTo(BigDecimal.ZERO) <= 0)
-            throw new DomainException("A quantidade do movimento de estoque deve ser informada e ser superior a 0.");
+            throw new DomainException(Message.format(Message.Type.SHOULD_HAVE, Message.Entity.STOCK_MOVEMENT, Message.Property.AMOUNT, "maior que 0"));
 
         this.movementType = movementType;
         this.product = product;

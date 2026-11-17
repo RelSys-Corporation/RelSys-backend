@@ -3,6 +3,7 @@ package com.domain.financial.cashMovement;
 import com.domain.financial.cashProcess.CashProcess;
 import com.domain.financial.financialAccount.FinancialAccount;
 import com.domain.shared.BaseEntityCompany;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.DomainException;
 import jakarta.persistence.*;
 
@@ -40,16 +41,16 @@ public class CashMovement extends BaseEntityCompany {
             LocalDateTime movementDate
     ) {
         if (cashProcess == null)
-            throw new DomainException("O processo de caixa precisa ser informado.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.CASH_MOVEMENT));
 
         if (financialAccount == null)
-            throw new DomainException("A conta financeira precisa ser informada.");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.FINANCIAL_ACCOUNT));
 
         if (fluxAcronym == null || fluxAcronym.isBlank() || !List.of("I", "O").contains(fluxAcronym))
-            throw new DomainException("O indicador de fluxo precisa ser informado ('I', 'O').");
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.FLUX, Message.Property.DIRECTION));
 
         if (value == null || value.compareTo(BigDecimal.ZERO) <= 0)
-            throw new DomainException("O valor da movimentação de caixa precisa ser superior a 0.");
+            throw new DomainException(Message.format(Message.Type.SHOULD_HAVE, Message.Entity.CASH_MOVEMENT, Message.Property.VALUE, "maior que 0"));
 
         this.cashProcess = cashProcess;
         this.financialAccount = financialAccount;

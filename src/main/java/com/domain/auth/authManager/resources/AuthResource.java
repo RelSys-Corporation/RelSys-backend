@@ -7,6 +7,8 @@ import com.domain.auth.authManager.mappers.LoginDtoMapper;
 import com.domain.auth.authManager.services.AuthService;
 import com.domain.auth.authManager.services.TokenService;
 import com.domain.auth.users.Users;
+import com.domain.system.message.Message;
+import com.infrastructure.annotations.RequiredField;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
@@ -74,7 +76,7 @@ public class AuthResource {
     @RolesAllowed("UPDATE-USER-COMPANIES")
     public Response updateUserCompanies(
             @PathParam("id") Long userId,
-            @NotEmpty(message = "As empresas precisam ser informadas")
+            @RequiredField(entity = Message.Entity.COMPANY)
             List<Long> companiesId
     ) {
         authService.updateUsersCompanies(userId, companiesId);

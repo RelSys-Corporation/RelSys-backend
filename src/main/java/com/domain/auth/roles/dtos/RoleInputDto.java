@@ -1,9 +1,10 @@
 package com.domain.auth.roles.dtos;
 
-import jakarta.validation.constraints.NotNull;
+import com.domain.system.message.Message;
+import com.infrastructure.annotations.RequiredField;
 
 public record RoleInputDto(
-        @NotNull(message = "Deve ser informada o nome da função.")
+        @RequiredField(entity = Message.Entity.ROLE, property = Message.Property.NAME)
         String name
 ) {
 }

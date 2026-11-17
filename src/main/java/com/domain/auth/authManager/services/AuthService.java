@@ -4,6 +4,7 @@ import com.domain.auth.roles.Roles;
 import com.domain.auth.users.Users;
 import com.domain.auth.users.usersCompany.UsersCompany;
 import com.domain.system.company.Company;
+import com.domain.system.message.Message;
 import com.infrastructure.exceptions.InvalidCredentialException;
 import com.infrastructure.security.utils.HashUtils;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -59,7 +60,7 @@ public class AuthService {
         if (Users.findAll().list().isEmpty())
             return register(userName, userPassword, roleId);
 
-        throw new IllegalStateException("O primeiro usuário já foi criado.");
+        throw new IllegalStateException(Message.format(Message.Type.ALREADY_EXISTS, Message.Entity.FIRST_USER));
     }
 
     public void updateUsersCompanies(

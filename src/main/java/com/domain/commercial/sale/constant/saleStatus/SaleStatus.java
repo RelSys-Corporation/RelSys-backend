@@ -1,5 +1,6 @@
 package com.domain.commercial.sale.constant.saleStatus;
 
+import com.domain.system.message.Message;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
@@ -43,12 +44,6 @@ public class SaleStatus extends PanacheEntityBase {
 
     public static SaleStatus of(Type status) {
         return SaleStatus.<SaleStatus>findByIdOptional(status.id)
-                .orElseThrow(() -> new IllegalStateException(
-                        String.format(
-                                "Status '%s' (%d) não encontrado na tabela SALE_STATUS.",
-                                status.getDescription(),
-                                status.getId()
-                        )
-                ));
+                .orElseThrow(() -> new IllegalStateException(Message.format(Message.Type.NOT_FOUND, Message.Entity.SALE, Message.Property.STATUS, status.description)));
     }
 }
