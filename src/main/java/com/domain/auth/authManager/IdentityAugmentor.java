@@ -31,7 +31,7 @@ public class IdentityAugmentor implements SecurityIdentityAugmentor {
 
                 if (role != null) {
                     RolesPermissions.getPermissionByRole(role)
-                            .forEach(p -> authorities.add(p.name));
+                            .forEach(p -> authorities.add(String.format("%s-%s", p.methodName, p.entity.name)));
                 }
             }
 

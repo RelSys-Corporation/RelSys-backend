@@ -12,8 +12,12 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "PERMISSIONS", schema = "AUTH")
 public class Permissions extends BaseEntity {
-    @Column(name = "NAME", length = 100, nullable = false, unique = true)
-    public String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PERMISSION_ENTITY_ID", insertable = false, updatable = false)
+    public PermissionsEntities entity;
+
+    @Column(name = "METHOD_NAME", insertable = false, updatable = false)
+    public String methodName;
 
     protected Permissions() {}
 

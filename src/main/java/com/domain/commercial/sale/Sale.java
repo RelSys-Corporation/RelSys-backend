@@ -40,7 +40,7 @@ public class Sale extends BaseEntityCompany {
             throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.PAYMENT_METHOD));
 
         if (saleStatus == null)
-            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.SALE_STATUS));
+            throw new DomainException(Message.format(Message.Type.REQUIRED_ARGUMENT, Message.Entity.SALE, Message.Property.STATUS));
 
         this.client = client;
         this.paymentMethod = paymentMethod;
